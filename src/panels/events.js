@@ -4,7 +4,7 @@ import { Group, PanelHeader, PanelHeaderBack, Placeholder } from "@vkontakte/vku
 export const Events = () => {
     return (
         <>
-            <PanelHeader before={<PanelHeaderBack />}>События</PanelHeader>
+            <PanelHeader>События</PanelHeader>
             <Group style={{ height: "1000px" }}>
                 <Placeholder
                     icon={<Icon56NewsfeedOutline width={56} height={56} />}

@@ -4,7 +4,7 @@ import { Group, PanelHeader, PanelHeaderBack, Placeholder } from "@vkontakte/vku
 export const Messages = () => {
     return (
         <>
-            <PanelHeader before={<PanelHeaderBack />}>Сообщения</PanelHeader>
+            <PanelHeader>Сообщения</PanelHeader>
             <Group style={{ height: "1000px" }}>
                 <Placeholder
                     icon={<Icon28MessageOutline width={56} height={56} />}
