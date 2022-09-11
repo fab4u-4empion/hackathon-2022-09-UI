@@ -20,6 +20,11 @@ const App = () => {
 		setChatID(chat_id)
 	}
 
+	const closeChatHanler = () => {
+		setMessagesActivePanel("messages")
+		setChatID(null)
+	}
+
 	return (
 		<ConfigProvider scheme={scheme}>
 			<AdaptivityProvider>
@@ -77,7 +82,7 @@ const App = () => {
 										/>
 									</Panel>
 									<Panel id="chat">
-										<Chat chatID={chatID}/>
+										<Chat chatID={chatID} onClose={closeChatHanler}/>
 									</Panel>
 								</View>
 								<View id="profile" activePanel="profile">

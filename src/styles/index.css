@@ -1,3 +1,5 @@
 body[scheme=bright_light], body[scheme=space_gray]  {
-    --tabbar_active_icon: rgb(235, 152, 0)!important;
+    --orange: rgb(235, 152, 0);
+    --tabbar_active_icon: var(--orange)!important;
+    --header_tint: var(--orange) !important;
 }

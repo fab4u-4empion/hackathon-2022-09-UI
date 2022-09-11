@@ -1,11 +1,12 @@
-import { Group, PanelHeader } from "@vkontakte/vkui"
+import { Group, PanelHeader, PanelHeaderBack } from "@vkontakte/vkui"
 
 export const Chat = ({
-    chatID
+    chatID,
+    onClose
 }) => {
     return (
         <>
-            <PanelHeader>{chatID}</PanelHeader>
+            <PanelHeader before={<PanelHeaderBack onClick={() => onClose()}/>}>{chatID}</PanelHeader>
             <Group>
                 
             </Group>
