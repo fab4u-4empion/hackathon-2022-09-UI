@@ -13,16 +13,18 @@ const App = () => {
 	const [activeStory, setActiveStory] = React.useState("events")
 	const [messagesActivePanel, setMessagesActivePanel] = useState("messages")
 	const [chatID, setChatID] = useState(null)
+	const [hasTabbar, setHasTabbar] = useState(true)
 	const onStoryChange = (e) => setActiveStory(e.currentTarget.dataset.story)
 
 	const openChatHandler = (chat_id) => {
-		setMessagesActivePanel("chat")
 		setChatID(chat_id)
+		setMessagesActivePanel("chat")
+		setHasTabbar(false)
 	}
 
 	const closeChatHanler = () => {
 		setMessagesActivePanel("messages")
-		setChatID(null)
+		setHasTabbar(true)
 	}
 
 	return (
@@ -41,7 +43,7 @@ const App = () => {
 						>
 							<Epic
 								activeStory={activeStory}
-								tabbar={
+								tabbar={hasTabbar &&
 									<Tabbar>
 										<TabbarItem
 											onClick={onStoryChange}
