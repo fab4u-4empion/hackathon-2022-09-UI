@@ -10,6 +10,7 @@ import { Profile } from './panels/profile';
 const App = () => {
 	const [scheme, setScheme] = useState('bright_light')
 	const [activeStory, setActiveStory] = React.useState("events")
+	const [messagesActivePanel, setMessagesActivePanel] = useState("messages")
 	const onStoryChange = (e) => setActiveStory(e.currentTarget.dataset.story)
 
 	return (
@@ -64,7 +65,12 @@ const App = () => {
 								</View>
 								<View id="messages" activePanel="messages">
 									<Panel id="messages">
-									 	<Messages/>
+									 	<Messages
+											onChatOpen={setMessagesActivePanel}
+										/>
+									</Panel>
+									<Panel id="chat">
+
 									</Panel>
 								</View>
 								<View id="profile" activePanel="profile">

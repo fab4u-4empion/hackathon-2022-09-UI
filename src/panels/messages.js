@@ -1,5 +1,4 @@
-import { Icon28MessageOutline } from "@vkontakte/icons"
-import { Avatar, calcInitialsAvatarColor, Caption, Group, InitialsAvatar, List, PanelHeader, PanelHeaderBack, Placeholder, RichCell, SimpleCell, Text } from "@vkontakte/vkui"
+import { calcInitialsAvatarColor, Group, InitialsAvatar, List, PanelHeader, RichCell, Text } from "@vkontakte/vkui"
 import { useShortText } from "../hooks/useShortText"
 
 export const Messages = () => {
