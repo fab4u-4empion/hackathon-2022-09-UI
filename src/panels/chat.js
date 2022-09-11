@@ -1,4 +1,4 @@
-import { calcInitialsAvatarColor, FixedLayout, Group, InitialsAvatar, PanelHeader, PanelHeaderBack, PanelHeaderContent, Separator, WriteBar, WriteBarIcon } from "@vkontakte/vkui"
+import { calcInitialsAvatarColor, Card, FixedLayout, Group, InitialsAvatar, PanelHeader, PanelHeaderBack, PanelHeaderContent, Separator, WriteBar, WriteBarIcon } from "@vkontakte/vkui"
 import { Fragment, useRef, useState } from "react";
 
 export const Chat = ({
@@ -22,7 +22,7 @@ export const Chat = ({
 
     return (
         <>
-            <PanelHeader before={<PanelHeaderBack onClick={() => onClose()}/>}>
+            <PanelHeader className="shadowPanelHeader" separator={false} before={<PanelHeaderBack onClick={() => onClose()}/>}>
                 <PanelHeaderContent
                     before={
                         <InitialsAvatar size={36} gradientColor={calcInitialsAvatarColor(Date.now())}>
@@ -34,7 +34,7 @@ export const Chat = ({
                     {chatID}
                 </PanelHeaderContent>
             </PanelHeader>
-            <Group>
+            <Group style={{height: "1000px"}}>
                 
             </Group>
             <FixedLayout
