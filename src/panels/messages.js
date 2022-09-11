@@ -11,7 +11,10 @@ export const Messages = ({onChatOpen}) => {
                         [1, 2, 3, 4].map(e => {
                             return (
                                 <RichCell
-                                    before={<InitialsAvatar gradientColor={calcInitialsAvatarColor(e)}>C{e}</InitialsAvatar>}
+                                    before={
+                                        <InitialsAvatar gradientColor={calcInitialsAvatarColor(e)}>
+                                            C{e}
+                                        </InitialsAvatar>}
                                     key={e}
                                     onClick={() => onChatOpen(`Chat ${e}`)}
                                     caption={

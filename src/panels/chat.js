@@ -1,4 +1,4 @@
-import { Group, PanelHeader, PanelHeaderBack } from "@vkontakte/vkui"
+import { calcInitialsAvatarColor, Group, InitialsAvatar, PanelHeader, PanelHeaderBack, PanelHeaderContent } from "@vkontakte/vkui"
 
 export const Chat = ({
     chatID,
@@ -6,7 +6,18 @@ export const Chat = ({
 }) => {
     return (
         <>
-            <PanelHeader before={<PanelHeaderBack onClick={() => onClose()}/>}>{chatID}</PanelHeader>
+            <PanelHeader before={<PanelHeaderBack onClick={() => onClose()}/>}>
+                <PanelHeaderContent
+                    before={
+                        <InitialsAvatar size={36} gradientColor={calcInitialsAvatarColor(Date.now())}>
+                            Ch
+                        </InitialsAvatar>
+                    }
+                    status="10 участников"
+                >
+                    {chatID}
+                </PanelHeaderContent>
+            </PanelHeader>
             <Group>
                 
             </Group>
