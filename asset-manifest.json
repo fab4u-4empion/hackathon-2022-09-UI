@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/hackathon-2022-09-UI/static/css/main.e61f7fdf.chunk.css",
-    "main.js": "/hackathon-2022-09-UI/static/js/main.076b3e68.chunk.js",
-    "main.js.map": "/hackathon-2022-09-UI/static/js/main.076b3e68.chunk.js.map",
+    "main.css": "/hackathon-2022-09-UI/static/css/main.60abf2b9.chunk.css",
+    "main.js": "/hackathon-2022-09-UI/static/js/main.7f7271ab.chunk.js",
+    "main.js.map": "/hackathon-2022-09-UI/static/js/main.7f7271ab.chunk.js.map",
     "runtime-main.js": "/hackathon-2022-09-UI/static/js/runtime-main.c4bca76a.js",
     "runtime-main.js.map": "/hackathon-2022-09-UI/static/js/runtime-main.c4bca76a.js.map",
     "static/css/2.d4501225.chunk.css": "/hackathon-2022-09-UI/static/css/2.d4501225.chunk.css",
@@ -10,14 +10,14 @@
     "static/js/2.4e9d227d.chunk.js.map": "/hackathon-2022-09-UI/static/js/2.4e9d227d.chunk.js.map",
     "index.html": "/hackathon-2022-09-UI/index.html",
     "static/css/2.d4501225.chunk.css.map": "/hackathon-2022-09-UI/static/css/2.d4501225.chunk.css.map",
-    "static/css/main.e61f7fdf.chunk.css.map": "/hackathon-2022-09-UI/static/css/main.e61f7fdf.chunk.css.map",
+    "static/css/main.60abf2b9.chunk.css.map": "/hackathon-2022-09-UI/static/css/main.60abf2b9.chunk.css.map",
     "static/js/2.4e9d227d.chunk.js.LICENSE.txt": "/hackathon-2022-09-UI/static/js/2.4e9d227d.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.c4bca76a.js",
     "static/css/2.d4501225.chunk.css",
     "static/js/2.4e9d227d.chunk.js",
-    "static/css/main.e61f7fdf.chunk.css",
-    "static/js/main.076b3e68.chunk.js"
+    "static/css/main.60abf2b9.chunk.css",
+    "static/js/main.7f7271ab.chunk.js"
   ]
 }
