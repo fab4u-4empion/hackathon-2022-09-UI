@@ -1,11 +1,11 @@
 import { Group, PanelHeader } from "@vkontakte/vkui"
 
 export const Chat = ({
-    chat_id
+    chatID
 }) => {
     return (
         <>
-            <PanelHeader>{chat_id}</PanelHeader>
+            <PanelHeader>{chatID}</PanelHeader>
             <Group>
                 
             </Group>

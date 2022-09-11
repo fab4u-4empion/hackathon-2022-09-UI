@@ -1,7 +1,7 @@
 import { calcInitialsAvatarColor, Group, InitialsAvatar, List, PanelHeader, RichCell, Text } from "@vkontakte/vkui"
 import { useShortText } from "../hooks/useShortText"
 
-export const Messages = () => {
+export const Messages = ({onChatOpen}) => {
     return (
         <>
             <PanelHeader>Сообщения</PanelHeader>
@@ -13,6 +13,7 @@ export const Messages = () => {
                                 <RichCell
                                     before={<InitialsAvatar gradientColor={calcInitialsAvatarColor(e)}>C{e}</InitialsAvatar>}
                                     key={e}
+                                    onClick={() => onChatOpen(`Chat ${e}`)}
                                     caption={
                                         <Text>{useShortText("FirstName: last message very long text", 30)} &#183; 2h</Text>
                                     }

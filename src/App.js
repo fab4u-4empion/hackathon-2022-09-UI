@@ -6,12 +6,19 @@ import { Icon28MessageOutline, Icon28NewsfeedOutline, Icon28UserCircleOutline } 
 import { Events } from './panels/events';
 import { Messages } from './panels/messages';
 import { Profile } from './panels/profile';
+import { Chat } from './panels/chat';
 
 const App = () => {
 	const [scheme, setScheme] = useState('bright_light')
 	const [activeStory, setActiveStory] = React.useState("events")
 	const [messagesActivePanel, setMessagesActivePanel] = useState("messages")
+	const [chatID, setChatID] = useState(null)
 	const onStoryChange = (e) => setActiveStory(e.currentTarget.dataset.story)
+
+	const openChatHandler = (chat_id) => {
+		setMessagesActivePanel("chat")
+		setChatID(chat_id)
+	}
 
 	return (
 		<ConfigProvider scheme={scheme}>
@@ -63,14 +70,14 @@ const App = () => {
 										<Events />
 									</Panel>
 								</View>
-								<View id="messages" activePanel="messages">
+								<View id="messages" activePanel={messagesActivePanel}>
 									<Panel id="messages">
 									 	<Messages
-											onChatOpen={setMessagesActivePanel}
+											onChatOpen={openChatHandler}
 										/>
 									</Panel>
 									<Panel id="chat">
-
+										<Chat chatID={chatID}/>
 									</Panel>
 								</View>
 								<View id="profile" activePanel="profile">
