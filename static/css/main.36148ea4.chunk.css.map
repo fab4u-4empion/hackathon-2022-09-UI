@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/styles/index.css"],"names":[],"mappings":"AAAA,kDACI,sCACJ","file":"main.36148ea4.chunk.css","sourcesContent":["body[scheme=bright_light], body[scheme=space_gray]  {\r\n    --tabbar_active_icon: rgb(235, 152, 0)!important;\r\n}"]}

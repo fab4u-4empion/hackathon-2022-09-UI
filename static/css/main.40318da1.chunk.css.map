@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://src/styles/index.css"],"names":[],"mappings":"AAAA,kDACI,qCACJ","file":"main.40318da1.chunk.css","sourcesContent":["body[scheme=bright_light], body[scheme=space_gray]  {\r\n    --tabbar_active_icon: orange!important;\r\n}"]}
