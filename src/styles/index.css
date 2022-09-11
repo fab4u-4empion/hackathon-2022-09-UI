@@ -1,5 +1,6 @@
 body[scheme=bright_light], body[scheme=space_gray]  {
     --orange: rgb(235, 152, 0);
+    --light-orange: rgb(250, 190, 79);
     --tabbar_active_icon: var(--orange)!important;
     --header_tint: var(--orange) !important;
     --accent: var(--orange) !important;
@@ -7,4 +8,44 @@ body[scheme=bright_light], body[scheme=space_gray]  {
 
 .shadowPanelHeader > .vkuiPanelHeader__fixed {
     box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.messageList {
+    min-height: 100%;
+    width: 100%;
+    padding-top: 10px;
+}
+
+.chatPanel > .vkuiPanel__in {
+    justify-content: end;
+}
+
+.messageBox {
+    min-height: 30px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: flex;
+}
+
+.messageBox.self {
+    justify-content: end;
+}
+
+.messageTextBox {
+    color: white;
+    background-color: var(--light-orange);
+    padding: 5px 10px;
+    border-radius: 12px;
+    max-width: 70%;
+}
+
+.messageTextBox.self {
+    background-color: var(--orange);
+}
+
+.messageCaption {
+    padding-top: 2px;
+    font-size: x-small;
+    text-align: end;
 }
