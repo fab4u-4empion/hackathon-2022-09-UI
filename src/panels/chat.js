@@ -35,7 +35,7 @@ export const Chat = ({
                     {chatID}
                 </PanelHeaderContent>
             </PanelHeader>
-            <MessageList />
+            <MessageList isPublic/>
             <FixedLayout
                 vertical="bottom"
                 style={{paddingBottom: 0}}

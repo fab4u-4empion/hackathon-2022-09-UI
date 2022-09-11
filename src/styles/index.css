@@ -1,6 +1,6 @@
 body[scheme=bright_light], body[scheme=space_gray]  {
     --orange: rgb(235, 152, 0);
-    --light-orange: rgb(250, 190, 79);
+    --light-orange: rgb(255, 207, 118);
     --tabbar_active_icon: var(--orange)!important;
     --header_tint: var(--orange) !important;
     --accent: var(--orange) !important;
@@ -26,6 +26,8 @@ body[scheme=bright_light], body[scheme=space_gray]  {
     margin-left: 10px;
     margin-right: 10px;
     display: flex;
+    column-gap: 5px;
+    align-items: flex-end;
 }
 
 .messageBox.self {
@@ -48,4 +50,10 @@ body[scheme=bright_light], body[scheme=space_gray]  {
     padding-top: 2px;
     font-size: x-small;
     text-align: end;
+}
+
+.messageTitle {
+    font-size: smaller;
+    font-weight: 600;
+    color: rgb(244, 85, 0);
 }
