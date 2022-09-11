@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://src/styles/index.css"],"names":[],"mappings":"AAAA,kDACI,gBAA0B,CAC1B,4CAA6C,CAC7C,qCACJ","file":"main.fa9f8616.chunk.css","sourcesContent":["body[scheme=bright_light], body[scheme=space_gray]  {\r\n    --orange: rgb(235, 152, 0);\r\n    --tabbar_active_icon: var(--orange)!important;\r\n    --header_tint: var(--orange) !important;\r\n}"]}
