@@ -1,5 +1,6 @@
 import { calcInitialsAvatarColor, Card, FixedLayout, Group, InitialsAvatar, PanelHeader, PanelHeaderBack, PanelHeaderContent, Separator, WriteBar, WriteBarIcon } from "@vkontakte/vkui"
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { MessageList } from "../messageComponents/messageList";
 
 export const Chat = ({
     chatID,
@@ -34,9 +35,7 @@ export const Chat = ({
                     {chatID}
                 </PanelHeaderContent>
             </PanelHeader>
-            <Group style={{height: "1000px"}}>
-                
-            </Group>
+            <MessageList isPublic/>
             <FixedLayout
                 vertical="bottom"
                 style={{paddingBottom: 0}}
