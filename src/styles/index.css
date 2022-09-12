@@ -3,6 +3,7 @@ body[scheme=bright_light], body[scheme=space_gray]  {
     --tabbar_active_icon: var(--orange)!important;
     --header_tint: var(--orange) !important;
     --accent: var(--orange) !important;
+    --counter_primary_background: var(--orange) !important;
 }
 
 .shadowPanelHeader > .vkuiPanelHeader__fixed {
