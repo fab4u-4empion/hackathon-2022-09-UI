@@ -1,4 +1,4 @@
-import { calcInitialsAvatarColor, Group, InitialsAvatar, List, PanelHeader, RichCell, Spinner, Text, Title } from "@vkontakte/vkui"
+import { calcInitialsAvatarColor, Counter, Group, InitialsAvatar, List, PanelHeader, RichCell, SimpleCell, Spinner, Text, Title } from "@vkontakte/vkui"
 import { useEffect } from "react"
 import { useChatListContextProvider } from "../context/chatListContext"
 import { useShortText } from "../hooks/useShortText"
@@ -15,19 +15,20 @@ export const Messages = ({onChatOpen}) => {
                         {
                             chats.map(e => {
                                 return (
-                                    <RichCell
+                                    <SimpleCell
                                         before={
                                             <InitialsAvatar gradientColor={calcInitialsAvatarColor(e.id)}>
                                                 {e.title.substring(0, 2)}
                                             </InitialsAvatar>}
                                         key={e.id}
                                         onClick={() => onChatOpen(e.id)}
-                                        caption={
-                                            <Text>{useShortText("FirstName: last message very long text", 30)} &#183; 2h</Text>
+                                        subtitle={
+                                            <>{useShortText("Алексей: стикер cnbrth cnbrth cnbrth cnbrt", 25)} &#183; 2h</>
                                         }
+                                        indicator={<Counter mode="primary">10</Counter>}
                                     >
                                         {e.title.substring(0, 10)}
-                                    </RichCell>
+                                    </SimpleCell>
                                 )
                             })
                         }
