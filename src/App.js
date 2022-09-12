@@ -83,7 +83,7 @@ const App = () => {
 											onChatOpen={openChatHandler}
 										/>
 									</Panel>
-									<Panel id="chat">
+									<Panel id="chat" className="chatPanel">
 										<Chat chatID={chatID} onClose={closeChatHanler}/>
 									</Panel>
 								</View>
