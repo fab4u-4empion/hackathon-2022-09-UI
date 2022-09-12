@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 export const useSessionStorage = (initialValue, key) => {
     const getValue = () => {
-        const storage = localStorage.getItem(key)
+        const storage = sessionStorage.getItem(key)
         if (storage) {
             return JSON.parse(storage)
         }
@@ -12,7 +12,7 @@ export const useSessionStorage = (initialValue, key) => {
     const [value, setValue] = useState(getValue)
 
     useEffect(() => {
-        localStorage.setItem(key, JSON.stringify(value))
+        sessionStorage.setItem(key, JSON.stringify(value))
     }, value)
 
     return [value, setValue]
