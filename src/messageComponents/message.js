@@ -1,4 +1,4 @@
-import { Avatar, calcInitialsAvatarColor, Caption, Headline, InitialsAvatar } from "@vkontakte/vkui"
+import { Avatar, calcInitialsAvatarColor, InitialsAvatar } from "@vkontakte/vkui"
 
 export const Message = ({
     self = false, 
