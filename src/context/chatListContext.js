@@ -20,7 +20,7 @@ export const ChatListContextProvider = ({children}) => {
         if (fetching) {
             axios.get(`https://jsonplaceholder.typicode.com/posts?_limit=${limit}&_page=${currentPage}`)
                 .then(response => {
-                    setChats([...chats, ...response.data])
+                    setChats([...chats, ...response.data.filter(e => chats.findIndex(c => c.id == e.id) < 0)])
                     setCurrentPage(prev => prev + 1)
                     setTotalCount(response.headers["x-total-count"])
                 })
@@ -48,6 +48,17 @@ export const ChatListContextProvider = ({children}) => {
         if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100) {
             setEndOfPage(true)
         }
+    }
+
+    const newMessageHandler = (message) => {
+        const index = chats.findIndex(e => e.id == message.id)
+        if (index > -1) {
+            const temp = [...chats]
+            temp.splice(index, 1)
+            setChats([message, ...temp])
+        } else {
+            setChats([message, ...chats])
+        };
     }
 
     return (
