@@ -1,32 +1,40 @@
-import { calcInitialsAvatarColor, Group, InitialsAvatar, List, PanelHeader, RichCell, Text } from "@vkontakte/vkui"
+import { calcInitialsAvatarColor, Counter, Group, InitialsAvatar, List, PanelHeader, RichCell, SimpleCell, Spinner, Text, Title } from "@vkontakte/vkui"
+import { useEffect } from "react"
+import { useChatListContextProvider } from "../context/chatListContext"
 import { useShortText } from "../hooks/useShortText"
 
 export const Messages = ({onChatOpen}) => {
+
+    const { chats, fetching } = useChatListContextProvider()
+
     return (
         <>
-            <PanelHeader>Сообщения</PanelHeader>
+            <PanelHeader className="shadowPanelHeader" separator={false}>Сообщения</PanelHeader>
             <Group>
-                <List>
-                    {
-                        [1, 2, 3, 4].map(e => {
-                            return (
-                                <RichCell
-                                    before={
-                                        <InitialsAvatar gradientColor={calcInitialsAvatarColor(e)}>
-                                            C{e}
-                                        </InitialsAvatar>}
-                                    key={e}
-                                    onClick={() => onChatOpen(`Chat ${e}`)}
-                                    caption={
-                                        <Text>{useShortText("FirstName: last message very long text", 30)} &#183; 2h</Text>
-                                    }
-                                >
-                                    Chat {e}
-                                </RichCell>
-                            )
-                        })
-                    }
-                </List>
+                {chats && <List>
+                        {
+                            chats.map(e => {
+                                return (
+                                    <SimpleCell
+                                        before={
+                                            <InitialsAvatar gradientColor={calcInitialsAvatarColor(e.id)}>
+                                                {e.title.substring(0, 2)}
+                                            </InitialsAvatar>}
+                                        key={e.id}
+                                        onClick={() => onChatOpen(e.id)}
+                                        subtitle={
+                                            <>{useShortText("Алексей: стикер cnbrth cnbrth cnbrth cnbrt", 25)} &#183; 2h</>
+                                        }
+                                        indicator={<Counter mode="primary">10</Counter>}
+                                    >
+                                        {e.title.substring(0, 10)}
+                                    </SimpleCell>
+                                )
+                            })
+                        }
+                        {fetching && <Spinner/>}
+                    </List>
+                }
             </Group>
         </>
     )

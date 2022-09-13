@@ -7,6 +7,7 @@ import { Events } from './panels/events';
 import { Messages } from './panels/messages';
 import { Profile } from './panels/profile';
 import { Chat } from './panels/chat';
+import { ChatListContextProvider } from './context/chatListContext';
 
 const App = () => {
 	const [scheme, setScheme] = useState('bright_light')
@@ -79,9 +80,11 @@ const App = () => {
 								</View>
 								<View id="messages" activePanel={messagesActivePanel}>
 									<Panel id="messages">
-									 	<Messages
-											onChatOpen={openChatHandler}
-										/>
+										<ChatListContextProvider>
+											<Messages
+												onChatOpen={openChatHandler}
+											/>
+										</ChatListContextProvider>
 									</Panel>
 									<Panel id="chat" className="chatPanel">
 										<Chat chatID={chatID} onClose={closeChatHanler}/>
