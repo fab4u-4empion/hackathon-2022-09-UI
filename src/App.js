@@ -12,7 +12,7 @@ import { ChatContextProvider } from './context/chatContext';
 
 const App = () => {
 	const [scheme, setScheme] = useState('bright_light')
-	const [activeStory, setActiveStory] = React.useState("messages")
+	const [activeStory, setActiveStory] = React.useState("events")
 	const [messagesActivePanel, setMessagesActivePanel] = useState("messages")
 	const [chat, setChat] = useState(null)
 	const [hasTabbar, setHasTabbar] = useState(true)
