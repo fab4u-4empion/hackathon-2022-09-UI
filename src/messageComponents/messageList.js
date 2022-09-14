@@ -1,373 +1,57 @@
-import { useEffect, useRef } from "react"
+import { Separator, Spinner } from "@vkontakte/vkui";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { TextSeparator } from "../components/textSeparator";
+import { useChatContextProvider } from "../context/chatContext";
 import { Message } from "./message"
 
-const userId = 1
+export const MessageList = ({ isPublic = true}) => {
+    const [scrollHeight, setScrollHeight] = useState(0)
+    const { messages, fetching, needScroll, newMessageCount, endOfPage } = useChatContextProvider()
 
-const messages = [
-    {
-        id: 100,
-        text: "poweofoewkfopwkoqfkwopekfokewopfkoewkfoewf",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 100,
-        text: "text",
-        firstName: "Ivan",
-        lastName: "Shestakov",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 100,
-        text: "long text",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 1,
-        text: "long long text",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 100,
-        text: "poweofoewkfopwkoqfkwopekfokewopfkoewkfoewf",
-        firstName: "Egor",
-        lastName: "Strupa",
-        time: "21:05",
-    },
-    {
-        id: 100,
-        text: "poweofoewkfopwkoqfkwopekfokewopfkoewkfoewf",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 1,
-        text: "poweofoewkfopwkoqfkwopekfokewopfkoewkfoewf",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 100,
-        text: "poweofoewkfopwkoqfkwopekfokewopfkoewkfoewf",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 100,
-        text: "text",
-        firstName: "Ivan",
-        lastName: "Shestakov",
-        time: "21:05"
-    },
-    {
-        id: 15,
-        text: "wefewfewfewf fjnklewiof fwfjio",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-    },
-    {
-        id: 1,
-        text: "lon long long text",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-    },
-    {
-        id: 100,
-        text: "poweofoewkfopwkoqfkwopekfokewopfkoewkfoewf",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 100,
-        text: "text",
-        firstName: "Ivan",
-        lastName: "Shestakov",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 100,
-        text: "long text",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 1,
-        text: "long long text",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 100,
-        text: "poweofoewkfopwkoqfkwopekfokewopfkoewkfoewf",
-        firstName: "Egor",
-        lastName: "Strupa",
-        time: "21:05",
-    },
-    {
-        id: 100,
-        text: "poweofoewkfopwkoqfkwopekfokewopfkoewkfoewf",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 1,
-        text: "poweofoewkfopwkoqfkwopekfokewopfkoewkfoewf",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 100,
-        text: "poweofoewkfopwkoqfkwopekfokewopfkoewkfoewf",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 100,
-        text: "text",
-        firstName: "Ivan",
-        lastName: "Shestakov",
-        time: "21:05"
-    },
-    {
-        id: 15,
-        text: "wefewfewfewf fjnklewiof fwfjio",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-    },
-    {
-        id: 1,
-        text: "lon long long text",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-    },
-    {
-        id: 100,
-        text: "poweofoewkfopwkoqfkwopekfokewopfkoewkfoewf",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 100,
-        text: "text",
-        firstName: "Ivan",
-        lastName: "Shestakov",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 100,
-        text: "long text",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 1,
-        text: "long long text",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 100,
-        text: "poweofoewkfopwkoqfkwopekfokewopfkoewkfoewf",
-        firstName: "Egor",
-        lastName: "Strupa",
-        time: "21:05",
-    },
-    {
-        id: 100,
-        text: "poweofoewkfopwkoqfkwopekfokewopfkoewkfoewf",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 1,
-        text: "poweofoewkfopwkoqfkwopekfokewopfkoewkfoewf",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 100,
-        text: "poweofoewkfopwkoqfkwopekfokewopfkoewkfoewf",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 100,
-        text: "text",
-        firstName: "Ivan",
-        lastName: "Shestakov",
-        time: "21:05"
-    },
-    {
-        id: 15,
-        text: "wefewfewfewf fjnklewiof fwfjio",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-    },
-    {
-        id: 1,
-        text: "lon long long text",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-    },
-    {
-        id: 100,
-        text: "poweofoewkfopwkoqfkwopekfokewopfkoewkfoewf",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 100,
-        text: "text",
-        firstName: "Ivan",
-        lastName: "Shestakov",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 100,
-        text: "long text",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 1,
-        text: "long long text",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 100,
-        text: "poweofoewkfopwkoqfkwopekfokewopfkoewkfoewf",
-        firstName: "Egor",
-        lastName: "Strupa",
-        time: "21:05",
-    },
-    {
-        id: 100,
-        text: "poweofoewkfopwkoqfkwopekfokewopfkoewkfoewf",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 1,
-        text: "poweofoewkfopwkoqfkwopekfokewopfkoewkfoewf",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 100,
-        text: "poweofoewkfopwkoqfkwopekfokewopfkoewkfoewf",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-        avatar: "t"
-    },
-    {
-        id: 100,
-        text: "text",
-        firstName: "Ivan",
-        lastName: "Shestakov",
-        time: "21:05"
-    },
-    {
-        id: 15,
-        text: "wefewfewfewf fjnklewiof fwfjio",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-    },
-    {
-        id: 1,
-        text: "lon long long text",
-        firstName: "Ivan",
-        lastName: "Gavrilovich",
-        time: "21:05",
-    }
-]
+    const bottomRef = useRef(null)
 
-export const MessageList = ({ isPublic = false}) => {
-    const h2ref = useRef(null);
+    useLayoutEffect(() => {
+        if (endOfPage) {
+            window.scrollTo(
+                window.scrollX,
+                document.body.scrollTop + document.documentElement.scrollHeight - scrollHeight
+            )
+        }
+        if(needScroll) {
+            bottomRef.current.scrollIntoView({ behavior: "smooth"})
+        }
+    }, [messages]);
 
-    useEffect(() => {
-        setTimeout(() => h2ref.current.scrollIntoView({ behavior: 'smooth' }), 320)
-    }, []);
+    useLayoutEffect(() => {
+        if (endOfPage) {
+            setScrollHeight(document.documentElement.scrollHeight)
+        }
+    }, [endOfPage])
 
     return (
         <>
+            {fetching && <Spinner style={{marginTop: 10}} />} 
+           
             <div className="messageList">
-                {messages.map(((m, index) => {
-                    return (
-                        <Message
-                            key={index}
-                            text={m.text}
-                            caption={m.time}
-                            hasAvatar={m.id != userId && isPublic}
-                            self={m.id == userId}
-                            title={isPublic && (m.firstName + " " + m.lastName)}
-                            avatar={m.avatar}
-                            id={m.id}
-                        />
+                {messages.map(((m, index, arr) => {
+                    return ( 
+                        <React.Fragment key={index}>
+                            {arr.length - index == newMessageCount && <TextSeparator text="Новые сообщения" />}
+                            <Message
+                                text={m.body}
+                                caption={m.id}
+                                hasAvatar={m.id % 2 == 1 && isPublic}
+                                self={m.id % 2 == 0}
+                                title={isPublic && m.email}
+                                avatar={m.avatar}
+                                id={m.id}
+                            />
+                            {/* {arr[index + 1] ? m.id - arr[index + 1].id == 59 && <TextSeparator text={`${m.id - 59}-${m.id - 60 + 30}`} /> : <></>} */}
+                        </React.Fragment>
                     )
                 }))}
             </div>
-            <div ref={h2ref}></div>
+            <div ref={bottomRef}></div>
         </>
     )
 }

@@ -11,30 +11,29 @@ export const Messages = ({onChatOpen}) => {
         <>
             <PanelHeader className="shadowPanelHeader" separator={false}>Сообщения</PanelHeader>
             <Group>
-                {chats && <List>
-                        {
-                            chats.map(e => {
-                                return (
-                                    <SimpleCell
-                                        before={
-                                            <InitialsAvatar gradientColor={calcInitialsAvatarColor(e.id)}>
-                                                {e.title.substring(0, 2)}
-                                            </InitialsAvatar>}
-                                        key={e.id}
-                                        onClick={() => onChatOpen(e.id)}
-                                        subtitle={
-                                            <>{useShortText("Алексей: стикер cnbrth cnbrth cnbrth cnbrt", 25)} &#183; 2h</>
-                                        }
-                                        indicator={<Counter mode="primary">10</Counter>}
-                                    >
-                                        {e.title.substring(0, 10)}
-                                    </SimpleCell>
-                                )
-                            })
-                        }
-                        {fetching && <Spinner/>}
-                    </List>
-                }
+                <List>
+                    {
+                        chats.map(e => {
+                            return (
+                                <SimpleCell
+                                    before={
+                                        <InitialsAvatar gradientColor={calcInitialsAvatarColor(e.id)}>
+                                            {e.title.substring(0, 2)}
+                                        </InitialsAvatar>}
+                                    key={e.id}
+                                    onClick={() => onChatOpen(e)}
+                                    subtitle={
+                                        <>{useShortText("Алексей: стикер cnbrth cnbrth cnbrth cnbrt", 25)} &#183; 2h</>
+                                    }
+                                    indicator={<Counter mode="primary">10</Counter>}
+                                >
+                                    {e.title.substring(0, 10)}
+                                </SimpleCell>
+                            )
+                        })
+                    }
+                    {fetching && <Spinner />}
+                </List>
             </Group>
         </>
     )

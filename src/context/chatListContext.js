@@ -18,7 +18,8 @@ export const ChatListContextProvider = ({children}) => {
 
     useEffect(() => {
         if (fetching) {
-            axios.get(`https://jsonplaceholder.typicode.com/posts?_limit=${limit}&_page=${currentPage}`)
+            axios
+                .get(`https://jsonplaceholder.typicode.com/posts?_limit=${limit}&_page=${currentPage}`)
                 .then(response => {
                     setChats([...chats, ...response.data.filter(e => chats.findIndex(c => c.id == e.id) < 0)])
                     setCurrentPage(prev => prev + 1)
@@ -39,7 +40,7 @@ export const ChatListContextProvider = ({children}) => {
     }, [])
 
     useEffect(() => {
-        if (endOfPage && chats.length < 100) {
+        if (endOfPage && chats.length < totalCount) {
             setFetching(true)
         }
     }, [endOfPage])
