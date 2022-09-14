@@ -1,6 +1,7 @@
 import { Group, PanelHeader, View, Panel, Button, FormLayout, FormItem, Input, FormLayoutGroup, DatePicker, Select, } from "@vkontakte/vkui"
 
 class SignUp extends React.Component {
+
     constructor(props) {
         super(props);
 
