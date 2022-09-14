@@ -8,17 +8,18 @@ import { Messages } from './panels/messages';
 import { Profile } from './panels/profile';
 import { Chat } from './panels/chat';
 import { ChatListContextProvider } from './context/chatListContext';
+import { ChatContextProvider } from './context/chatContext';
 
 const App = () => {
 	const [scheme, setScheme] = useState('bright_light')
-	const [activeStory, setActiveStory] = React.useState("events")
+	const [activeStory, setActiveStory] = React.useState("messages")
 	const [messagesActivePanel, setMessagesActivePanel] = useState("messages")
-	const [chatID, setChatID] = useState(null)
+	const [chat, setChat] = useState(null)
 	const [hasTabbar, setHasTabbar] = useState(true)
 	const onStoryChange = (e) => setActiveStory(e.currentTarget.dataset.story)
 
-	const openChatHandler = (chat_id) => {
-		setChatID(chat_id)
+	const openChatHandler = (chat) => {
+		setChat(chat)
 		setMessagesActivePanel("chat")
 		setHasTabbar(false)
 	}
@@ -87,7 +88,9 @@ const App = () => {
 										</ChatListContextProvider>
 									</Panel>
 									<Panel id="chat" className="chatPanel">
-										<Chat chatID={chatID} onClose={closeChatHanler}/>
+										<ChatContextProvider chat={chat}>
+											<Chat onClose={closeChatHanler} />
+										</ChatContextProvider>
 									</Panel>
 								</View>
 								<View id="profile" activePanel="profile">

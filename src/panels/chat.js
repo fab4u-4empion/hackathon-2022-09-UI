@@ -1,15 +1,17 @@
 import { calcInitialsAvatarColor, Card, FixedLayout, Group, InitialsAvatar, PanelHeader, PanelHeaderBack, PanelHeaderContent, Separator, WriteBar, WriteBarIcon } from "@vkontakte/vkui"
 import { Fragment, useEffect, useRef, useState } from "react";
+import { useChatContextProvider } from "../context/chatContext";
 import { MessageList } from "../messageComponents/messageList";
 
 export const Chat = ({
-    chatID,
     onClose
 }) => {
     const [writeBarText, setWriteBarText] = useState("")
     const [bottomPadding, setBottomPadding] = useState(0);
 
     const fixedLayoutInnerElRef = useRef();
+
+    const { members, chat, needScroll, messages } = useChatContextProvider()
 
     const updateBottomPadding = () => {
         const el = fixedLayoutInnerElRef.current;
@@ -26,16 +28,16 @@ export const Chat = ({
             <PanelHeader className="shadowPanelHeader" separator={false} before={<PanelHeaderBack onClick={() => onClose()}/>}>
                 <PanelHeaderContent
                     before={
-                        <InitialsAvatar size={36} gradientColor={calcInitialsAvatarColor(Date.now())}>
-                            Ch
+                        <InitialsAvatar size={36} gradientColor={calcInitialsAvatarColor(chat.id)}>
+                            {chat.title.substring(0, 2)}
                         </InitialsAvatar>
                     }
-                    status="10 участников"
+                    status={`${members.length} участников`}
                 >
-                    {chatID}
+                    {chat.title.substring(0, 10)}
                 </PanelHeaderContent>
             </PanelHeader>
-            <MessageList isPublic/>
+            <MessageList />
             <FixedLayout
                 vertical="bottom"
                 style={{paddingBottom: 0}}
