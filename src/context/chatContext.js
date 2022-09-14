@@ -16,6 +16,7 @@ export const ChatContextProvider = ({children, chat}) => {
     const [limit] = useState(30)
     const [endOfPage, setEndOfPage] = useState(false)
     const [needScroll, setNeedScroll] = useState(true)
+    const [newMessageCount, setNewMessageCount] = useState(2)
 
     useEffect(async () => {
         // const membersResponse = await axios.get("https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Users")
@@ -43,7 +44,7 @@ export const ChatContextProvider = ({children, chat}) => {
             .finally(() => {
                 setEndOfPage(false)
                 setFetching(false)
-                needScroll && window.scrollTo(window.scrollX, document.body.scrollHeight)
+                currentPage == 1 && window.scrollTo(window.scrollX, document.body.scrollHeight)
             })
     }
 
@@ -65,6 +66,21 @@ export const ChatContextProvider = ({children, chat}) => {
         if (e.target.documentElement.scrollTop < 100) {
             setEndOfPage(true)
         }
+        if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100) {
+            setNeedScroll(true)
+        }
+    }
+
+    const sendMessage = (text) => {
+        setNeedScroll(true)
+        setMessages([...messages, {
+            "userId": 1,
+            "id": 2,
+            "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+            "email": "test@test.test",
+            "body": text
+        },])
+        setNewMessageCount(prev => prev + 1)
     }
 
     return (
@@ -75,7 +91,10 @@ export const ChatContextProvider = ({children, chat}) => {
             chat,
             needScroll,
             limit,
-            currentPage
+            currentPage,
+            sendMessage,
+            endOfPage,
+            newMessageCount
         }}>
             {children}
         </Context.Provider>

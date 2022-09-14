@@ -1,4 +1,4 @@
-import { calcInitialsAvatarColor, Card, FixedLayout, Group, InitialsAvatar, PanelHeader, PanelHeaderBack, PanelHeaderContent, Separator, WriteBar, WriteBarIcon } from "@vkontakte/vkui"
+import { calcInitialsAvatarColor, Card, Cell, FixedLayout, Group, InitialsAvatar, PanelHeader, PanelHeaderBack, PanelHeaderContent, Separator, WriteBar, WriteBarIcon } from "@vkontakte/vkui"
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useChatContextProvider } from "../context/chatContext";
 import { MessageList } from "../messageComponents/messageList";
@@ -11,7 +11,7 @@ export const Chat = ({
 
     const fixedLayoutInnerElRef = useRef();
 
-    const { members, chat, needScroll, messages } = useChatContextProvider()
+    const { members, chat, sendMessage } = useChatContextProvider()
 
     const updateBottomPadding = () => {
         const el = fixedLayoutInnerElRef.current;
@@ -23,9 +23,21 @@ export const Chat = ({
         }
     };
 
+    const sendMessageHandler = () => {
+        sendMessage(writeBarText)
+        setWriteBarText("")
+    }
+
     return (
         <>
-            <PanelHeader className="shadowPanelHeader" separator={false} before={<PanelHeaderBack onClick={() => onClose()}/>}>
+            <PanelHeader
+                className="shadowPanelHeader" 
+                separator={false} 
+                before={
+                    <PanelHeaderBack 
+                        onClick={() => onClose()}
+                    />}
+            >
                 <PanelHeaderContent
                     before={
                         <InitialsAvatar size={36} gradientColor={calcInitialsAvatarColor(chat.id)}>
@@ -37,7 +49,7 @@ export const Chat = ({
                     {chat.title.substring(0, 10)}
                 </PanelHeaderContent>
             </PanelHeader>
-            <MessageList />
+            <MessageList/>
             <FixedLayout
                 vertical="bottom"
                 style={{paddingBottom: 0}}
@@ -51,7 +63,11 @@ export const Chat = ({
                         placeholder="Сообщение"
                         after={
                             <Fragment>
-                                <WriteBarIcon mode="send" disabled={writeBarText.length === 0}/>
+                                <WriteBarIcon 
+                                    mode="send" 
+                                    disabled={writeBarText.length === 0}
+                                    onClick={() => sendMessageHandler()}
+                                />
                             </Fragment>
                         }
                     />

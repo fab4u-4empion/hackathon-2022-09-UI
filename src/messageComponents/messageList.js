@@ -4,24 +4,29 @@ import { TextSeparator } from "../components/textSeparator";
 import { useChatContextProvider } from "../context/chatContext";
 import { Message } from "./message"
 
-const userId = 1
-const count = 2
-
 export const MessageList = ({ isPublic = true}) => {
     const [scrollHeight, setScrollHeight] = useState(0)
-    const { messages, fetching, needScroll, limit } = useChatContextProvider()
+    const { messages, fetching, needScroll, newMessageCount, endOfPage } = useChatContextProvider()
+
+    const bottomRef = useRef(null)
 
     useLayoutEffect(() => {
-        if (scrollHeight) {
+        if (endOfPage) {
             window.scrollTo(
                 window.scrollX,
                 document.body.scrollTop + document.documentElement.scrollHeight - scrollHeight
             )
-            setScrollHeight(document.documentElement.scrollHeight)
-        } else {
-            setScrollHeight(document.documentElement.scrollHeight)
+        }
+        if(needScroll) {
+            bottomRef.current.scrollIntoView({ behavior: "smooth"})
         }
     }, [messages]);
+
+    useLayoutEffect(() => {
+        if (endOfPage) {
+            setScrollHeight(document.documentElement.scrollHeight)
+        }
+    }, [endOfPage])
 
     return (
         <>
@@ -31,7 +36,7 @@ export const MessageList = ({ isPublic = true}) => {
                 {messages.map(((m, index, arr) => {
                     return ( 
                         <React.Fragment key={index}>
-                            {arr.length - index == count && <TextSeparator text="Новые сообщения" />}
+                            {arr.length - index == newMessageCount && <TextSeparator text="Новые сообщения" />}
                             <Message
                                 text={m.body}
                                 caption={m.id}
@@ -41,11 +46,12 @@ export const MessageList = ({ isPublic = true}) => {
                                 avatar={m.avatar}
                                 id={m.id}
                             />
+                            {/* {arr[index + 1] ? m.id - arr[index + 1].id == 59 && <TextSeparator text={`${m.id - 59}-${m.id - 60 + 30}`} /> : <></>} */}
                         </React.Fragment>
                     )
                 }))}
             </div>
-            
+            <div ref={bottomRef}></div>
         </>
     )
 }
