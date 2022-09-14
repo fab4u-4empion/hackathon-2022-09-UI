@@ -7,6 +7,8 @@ import { Message } from "./message"
 export const MessageList = ({ isPublic = true}) => {
     const [scrollHeight, setScrollHeight] = useState(0)
     const { messages, fetching, needScroll, newMessageCount, endOfPage } = useChatContextProvider()
+    const [windowHeight, setWindowHeight] = useState(window.innerHeight)
+    const [didResize, setDidResize] = useState(false)
 
     const bottomRef = useRef(null)
 
@@ -27,6 +29,25 @@ export const MessageList = ({ isPublic = true}) => {
             setScrollHeight(document.documentElement.scrollHeight)
         }
     }, [endOfPage])
+
+    useEffect(() => {
+        if (didResize) {
+            console.log(window.scrollY);
+            console.log(windowHeight - window.innerHeight);
+            window.scrollTo(window.scrollX, window.scrollY + windowHeight - window.innerHeight + 1)
+            setWindowHeight(window.innerHeight)
+            setDidResize(false)
+        }
+    }, [didResize])
+
+    const resizeHandler = () => {
+        setDidResize(true)
+    }
+
+    useEffect(() => {
+        window.addEventListener("resize", resizeHandler)
+        return () => window.removeEventListener("resize", resizeHandler)
+    }, [])
 
     return (
         <>
