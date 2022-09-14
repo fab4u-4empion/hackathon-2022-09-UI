@@ -1,8 +1,13 @@
-import {Icon28UserCircleOutline} from "@vkontakte/icons"
-import {Group, PanelHeader, Root, View, Panel, CellButton, SimpleCell, RichCell, Button} from "@vkontakte/vkui"
-import {useState} from "react";
+import {
+    Icon24MessageAddBadgeOutline,
+    Icon24MessageOutline,
+    Icon24UserAddOutline,
+    Icon28UserCircleOutline
+} from "@vkontakte/icons"
+import {Group, PanelHeader, Button} from "@vkontakte/vkui"
 import {Header, Avatar, Title, HorizontalScroll, Cell, List, HorizontalCell} from "@vkontakte/vkui";
-import {UsersStack} from "@vkontakte/vkui";
+import {ButtonGroup} from "@vkontakte/vkui";
+import {Subhead} from "@vkontakte/vkui";
 
 //Test commit
 // const [activeView, setActiveView] = useState("view1")
@@ -12,58 +17,59 @@ export const Profile = () => {
     return (
         <Group>
             <PanelHeader>Профиль</PanelHeader>
-            {/*<Group>*/}
-            {/*    <Header mode="secondary">Был в сети 21.12.2012</Header>*/}
-            {/*    <div*/}
-            {/*        style={{display: "flex", padding: 12, gap: 8, flexFlow: "column", alignItems: "center"}}*/}
-            {/*    >*/}
-            {/*        <Avatar size={280}*/}
-            {/*                src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>*/}
-            {/*        <SimpleCell*/}
-            {/*            subtitle="Люблю играть в танки"*/}
-            {/*        >*/}
-            {/*            Ваня Сакун*/}
-            {/*        </SimpleCell>*/}
-            {/*    </div>*/}
-            {/*</Group>*/}
-            <RichCell
-                disabled
-                before={<Avatar size={100}
-                                src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>}
-                caption="Lesta Games(Техподдержка)"
-                actions={
-                    <Group>
-                        <Button style={{margin: "5px"}}>Добавить</Button>
-                        <Button style={{margin: "5px"}}>Написать</Button>
-                    </Group>
-                }
+            <div
+                style={{
+                    margin: "20px",
+                    display: "flex",
+                }}
             >
-                Ваня Сакун
-            </RichCell>
-                <Group header={<Header mode="secondary">Друзья</Header>}>
+                <Avatar size={150}
+                        src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
+                <div style={{flexDirection: "column", margin: "20px"}}>
+                    <Title level="1" style={{marginBottom: 10}}>
+                        Ваня Сакун
+                    </Title>
+                    <Subhead weight="3" style={{marginBottom: 16}}>
+                        Техподдержка Wargaming
+                    </Subhead>
+                    <ButtonGroup>
+                        <Button size="m"><Icon24UserAddOutline/></Button>
+                        <Button size="m"><Icon24MessageOutline/></Button>
+                    </ButtonGroup>
+                </div>
+            </div>
+
+            <Group header={<Header mode="secondary">Друзья</Header>}>
+                <>
                     <HorizontalScroll
                         showArrows
                         getScrollToLeft={(i) => i - 120}
                         getScrollToRight={(i) => i + 120}
                     >
                         <div style={{display: "flex"}}>
-                            <HorizontalCell key={1} header={"ABOBA"}>
+                            <HorizontalCell key={1}>
+                                <div style={{flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+                                    <Avatar size={56}
+                                            src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
+                                    <div style={{textAlign: "center", fontSize: "14px"}}>Панев<br/> Александр</div>
+                                </div>
+                            </HorizontalCell>
+                            <HorizontalCell key={2}>
+                                <div style={{flexDirection: "column", justifyContent: "center"}}>
+                                    <Avatar size={56}
+                                            src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
+                                    <div style={{textAlign: "center", fontSize: "14px"}}>Струпинский <br/>Егор</div>
+                                </div>
+                            </HorizontalCell>
+                            <HorizontalCell key={3} header={<Subhead>Егор <br/> Струп<br/>инский</Subhead>}>
                                 <Avatar size={56}
                                         src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
                             </HorizontalCell>
-                            <HorizontalCell key={2} header={"ABOBA"}>
+                            <HorizontalCell key={4} header={<Subhead>Александр <br/> Панев</Subhead>}>
                                 <Avatar size={56}
                                         src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
                             </HorizontalCell>
-                            <HorizontalCell key={3} header={"ABOBA"}>
-                                <Avatar size={56}
-                                        src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
-                            </HorizontalCell>
-                            <HorizontalCell key={4} header={"ABOBA"}>
-                                <Avatar size={56}
-                                        src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
-                            </HorizontalCell>
-                            <HorizontalCell key={5} header={"ABOBA"}>
+                            <HorizontalCell key={5} header={"Струпинский Егор"}>
                                 <Avatar size={56}
                                         src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
                             </HorizontalCell>
@@ -71,9 +77,18 @@ export const Profile = () => {
                                 <Avatar size={56}
                                         src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
                             </HorizontalCell>
+                            <HorizontalCell key={7} header={"ABOBA"}>
+                                <Avatar size={56}
+                                        src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
+                            </HorizontalCell>
+                            <HorizontalCell key={8} header={"ABOBA"}>
+                                <Avatar size={56}
+                                        src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
+                            </HorizontalCell>
                         </div>
                     </HorizontalScroll>
-                </Group>
+                </>
+            </Group>
             <Group header={<Header mode="secondary">Любимые игры</Header>}>
                 <List>
                     <Cell before={<Avatar src={"https://s2-goods.ozstatic.by/2000/42/893/10/10893042_0.jpg"}/>}
@@ -92,5 +107,6 @@ export const Profile = () => {
                     </Cell>
                 </List>
             </Group>
-        </Group>)
+        </Group>
+    )
 }
