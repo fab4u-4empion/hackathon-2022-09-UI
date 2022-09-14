@@ -31,10 +31,18 @@ export const MessageList = ({ isPublic = true}) => {
     }, [endOfPage])
 
     useEffect(() => {
+        console.log(window.scrollY);
+        console.log(windowHeight - window.innerHeight);
         if (didResize) {
-            console.log(window.scrollY);
-            console.log(windowHeight - window.innerHeight);
-            window.scrollTo(window.scrollX, window.scrollY + windowHeight - window.innerHeight + 1)
+            if (windowHeight - window.innerHeight > 0) {
+                window.scrollTo(window.scrollX, window.scrollY + windowHeight - window.innerHeight)
+            } 
+            if (windowHeight - window.innerHeight < 0) {
+                if (document.documentElement.scrollHeight - (document.documentElement.scrollTop + window.innerHeight) > Math.abs(windowHeight - window.innerHeight)) {
+                    window.scrollTo(window.scrollX, window.scrollY + windowHeight - window.innerHeight)
+                }
+            }
+            
             setWindowHeight(window.innerHeight)
             setDidResize(false)
         }
