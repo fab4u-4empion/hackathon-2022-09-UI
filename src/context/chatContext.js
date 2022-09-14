@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const Context = createContext()
 
@@ -13,7 +13,7 @@ export const ChatContextProvider = ({children, chat}) => {
     const [fetching, setFetching] = useState(true);
     const [currentPage, setCurrentPage] = useState(1)
     const [totalCount, setTotalCount] = useState(0)
-    const [limit] = useState(4)
+    const [limit] = useState(30)
     const [endOfPage, setEndOfPage] = useState(false)
     const [needScroll, setNeedScroll] = useState(true)
 
@@ -34,9 +34,9 @@ export const ChatContextProvider = ({children, chat}) => {
 
     const getMessages = () => {
         axios
-            .get(`https://jsonplaceholder.typicode.com/comments?_limit=${limit}&_page${currentPage}`)
+            .get(`https://jsonplaceholder.typicode.com/comments?_limit=${limit}&_page=${currentPage}`)
             .then(response => {
-                setMessages([...messages, ...response.data])
+                setMessages([...response.data, ...messages])
                 setCurrentPage(prev => prev + 1)
                 setTotalCount(response.headers["x-total-count"])
             })
@@ -73,7 +73,9 @@ export const ChatContextProvider = ({children, chat}) => {
             fetching,
             members, 
             chat,
-            needScroll
+            needScroll,
+            limit,
+            currentPage
         }}>
             {children}
         </Context.Provider>
