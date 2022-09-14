@@ -1,10 +1,11 @@
 import { Separator, Spinner } from "@vkontakte/vkui";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { TextSeparator } from "../components/textSeparator";
 import { useChatContextProvider } from "../context/chatContext";
 import { Message } from "./message"
 
 const userId = 1
-const count = 0
+const count = 2
 
 export const MessageList = ({ isPublic = true}) => {
     const [scrollHeight, setScrollHeight] = useState(0)
@@ -30,7 +31,7 @@ export const MessageList = ({ isPublic = true}) => {
                 {messages.map(((m, index, arr) => {
                     return ( 
                         <React.Fragment key={index}>
-                            {arr.length - index == count && <Separator title="ntrcn" />}
+                            {arr.length - index == count && <TextSeparator text="Новые сообщения" />}
                             <Message
                                 text={m.body}
                                 caption={m.id}
