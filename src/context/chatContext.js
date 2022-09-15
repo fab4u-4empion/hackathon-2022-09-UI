@@ -7,6 +7,8 @@ export const useChatContextProvider = () => {
     return useContext(Context)
 }
 
+let socket
+
 export const ChatContextProvider = ({children, chat}) => {
     const [messages, setMessages] = useState([])
     const [members, setMembers] = useState([]);
@@ -17,21 +19,34 @@ export const ChatContextProvider = ({children, chat}) => {
     const [endOfPage, setEndOfPage] = useState(false)
     const [needScroll, setNeedScroll] = useState(true)
     const [newMessageCount, setNewMessageCount] = useState(2)
+    const [openSocket, setOpenSocket] = useState(false)
 
     useEffect(async () => {
-        // const membersResponse = await axios.get("https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Users")
-        // setMembers([...membersResponse.data.value])
-        setMembers([1])
+        const membersResponse = await axios.get("https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Users")
+        setMembers([...membersResponse.data.value]) 
         setTimeout(() => {
             getMessages()
         }, 500)
     }, []);
 
     useEffect(() => {
+        socket = new WebSocket("ws://192.168.160.194:8087/hello")
+        socket.addEventListener("opne", openWebSocketHandler)
+        return () => {
+            socket.removeEventListener("opne", openWebSocketHandler)
+            socket.close()
+        }
+    }, [])
+
+    useEffect(() => {
         if (fetching && members.length > 0) {
             getMessages()
         }
     }, [fetching])
+
+    useEffect(() => {
+        chat.members = members
+    }, [members])
 
     const getMessages = () => {
         axios
@@ -44,7 +59,7 @@ export const ChatContextProvider = ({children, chat}) => {
             .finally(() => {
                 setEndOfPage(false)
                 setFetching(false)
-                currentPage == 1 && window.scrollTo(window.scrollX, document.body.scrollHeight)
+                currentPage == 1 && window.scrollTo(window.scrollX, document.body.scrollHeight) 
             })
     }
 
@@ -73,14 +88,20 @@ export const ChatContextProvider = ({children, chat}) => {
 
     const sendMessage = (text) => {
         setNeedScroll(true)
-        setMessages([...messages, {
-            "userId": 1,
-            "id": 2,
-            "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+        const message = {
+            "senderId": 1,
+            "chatId": 2,
             "email": "test@test.test",
             "body": text
-        },])
+        }
+        socket.send(JSON.stringify(message))
+        setMessages([...messages, message])
         setNewMessageCount(prev => prev + 1)
+    }
+
+    const openWebSocketHandler = (e) => {
+        setOpenSocket(true)
+        console.log(e);
     }
 
     return (
@@ -94,7 +115,8 @@ export const ChatContextProvider = ({children, chat}) => {
             currentPage,
             sendMessage,
             endOfPage,
-            newMessageCount
+            newMessageCount,
+            openSocket
         }}>
             {children}
         </Context.Provider>

@@ -31,8 +31,6 @@ export const MessageList = ({ isPublic = true}) => {
     }, [endOfPage])
 
     useEffect(() => {
-        console.log(window.scrollY);
-        console.log(windowHeight - window.innerHeight);
         if (didResize) {
             if (windowHeight - window.innerHeight > 0) {
                 window.scrollTo(window.scrollX, window.scrollY + windowHeight - window.innerHeight)
