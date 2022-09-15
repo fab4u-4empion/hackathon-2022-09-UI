@@ -4,18 +4,23 @@ import {
     Icon24UserAddOutline,
     Icon28UserCircleOutline
 } from "@vkontakte/icons"
-import {Group, PanelHeader, Button} from "@vkontakte/vkui"
+import {Group, PanelHeader, Button, Input, Select, Textarea} from "@vkontakte/vkui"
 import {Header, Avatar, Title, HorizontalScroll, Cell, List, HorizontalCell} from "@vkontakte/vkui";
 import {ButtonGroup} from "@vkontakte/vkui";
 import {Subhead} from "@vkontakte/vkui";
+import {FormLayout} from "@vkontakte/vkui";
+import {FormItem} from "@vkontakte/vkui";
+import {FormLayoutGroup} from "@vkontakte/vkui";
+import {SegmentedControl} from "@vkontakte/vkui";
 
 //Test commit
 // const [activeView, setActiveView] = useState("view1")
 
 export const Profile = () => {
     let recentFriends;
+    let email;
     return (
-        <Group>
+        <>
             <PanelHeader>Профиль</PanelHeader>
             <div
                 style={{
@@ -47,25 +52,19 @@ export const Profile = () => {
                         getScrollToRight={(i) => i + 120}
                     >
                         <div style={{display: "flex"}}>
-                            <HorizontalCell key={1}>
-                                <div style={{flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
-                                    <Avatar size={56}
-                                            src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
-                                    <div style={{textAlign: "center", fontSize: "14px"}}>Панев<br/> Александр</div>
-                                </div>
-                            </HorizontalCell>
-                            <HorizontalCell key={2}>
-                                <div style={{flexDirection: "column", justifyContent: "center"}}>
-                                    <Avatar size={56}
-                                            src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
-                                    <div style={{textAlign: "center", fontSize: "14px"}}>Струпинский <br/>Егор</div>
-                                </div>
-                            </HorizontalCell>
-                            <HorizontalCell key={3} header={<Subhead>Егор <br/> Струп<br/>инский</Subhead>}>
+                            <HorizontalCell key={1} header={"Струпинский Егор"}>
                                 <Avatar size={56}
                                         src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
                             </HorizontalCell>
-                            <HorizontalCell key={4} header={<Subhead>Александр <br/> Панев</Subhead>}>
+                            <HorizontalCell key={2} header={"Струпинский Егор"}>
+                                <Avatar size={56}
+                                        src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
+                            </HorizontalCell>
+                            <HorizontalCell key={3} header={"Струпинский Егор"}>
+                                <Avatar size={56}
+                                        src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
+                            </HorizontalCell>
+                            <HorizontalCell key={4} header={"Струпинский Егор"}>
                                 <Avatar size={56}
                                         src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
                             </HorizontalCell>
@@ -73,7 +72,7 @@ export const Profile = () => {
                                 <Avatar size={56}
                                         src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
                             </HorizontalCell>
-                            <HorizontalCell key={6} header={"ABOBA"}>
+                            <HorizontalCell key={6} header={"Струпинский Егор"}>
                                 <Avatar size={56}
                                         src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
                             </HorizontalCell>
@@ -82,6 +81,10 @@ export const Profile = () => {
                                         src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
                             </HorizontalCell>
                             <HorizontalCell key={8} header={"ABOBA"}>
+                                <Avatar size={56}
+                                        src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
+                            </HorizontalCell>
+                            <HorizontalCell key={9} header={"ABOBA"}>
                                 <Avatar size={56}
                                         src={"https://www.iphones.ru/wp-content/uploads/2021/09/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA-%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0-2021-09-07-%D0%B2-19.48.05.jpg"}/>
                             </HorizontalCell>
@@ -107,6 +110,61 @@ export const Profile = () => {
                     </Cell>
                 </List>
             </Group>
-        </Group>
+            <PanelHeader>Регистрация</PanelHeader>
+
+            <Group>
+                <FormLayout>
+                    <FormItem
+                        top="E-mail"
+                        status={email ? "valid" : "error"}
+                        bottom={
+                            email
+                                ? "Электронная почта введена верно!"
+                                : "Пожалуйста, введите электронную почту"
+                        }
+                    >
+                        <Input
+                            type="email"
+                            name="email"
+                            value={email}
+                        />
+                    </FormItem>
+
+                    <FormLayoutGroup mode="horizontal">
+                        <FormItem top="Логин">
+                            <Input/>
+                        </FormItem>
+                    </FormLayoutGroup>
+
+                    <FormItem top="Пол">
+                        <Select
+                            placeholder="Выберите пол"
+                            options={[
+                                {
+                                    value: "0",
+                                    label: "Мужской",
+                                },
+                                {
+                                    value: "1",
+                                    label: "Женский",
+                                },
+                                {
+                                    value: "2",
+                                    label: "Другой",
+                                },
+                            ]}
+                        />
+                    </FormItem>
+                    <FormItem top="О себе">
+                        <Textarea/>
+                    </FormItem>
+                    <FormItem>
+                        <Button size="l" stretched>
+                            Сохранить
+                        </Button>
+                    </FormItem>
+                </FormLayout>
+            </Group>
+        </>
     )
 }
