@@ -1,17 +1,19 @@
-import { calcInitialsAvatarColor, Card, Cell, FixedLayout, Group, InitialsAvatar, PanelHeader, PanelHeaderBack, PanelHeaderContent, Separator, WriteBar, WriteBarIcon } from "@vkontakte/vkui"
+import { calcInitialsAvatarColor, Card, Cell, FixedLayout, Group, InitialsAvatar, PanelHeader, PanelHeaderBack, PanelHeaderButton, PanelHeaderContent, Separator, WriteBar, WriteBarIcon } from "@vkontakte/vkui"
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useChatContextProvider } from "../context/chatContext";
 import { MessageList } from "../messageComponents/messageList";
+import { Icon28Users3Outline } from '@vkontakte/icons';
 
 export const Chat = ({
-    onClose
+    onClose,
+    onOpenChatMembersList
 }) => {
     const [writeBarText, setWriteBarText] = useState("")
     const [bottomPadding, setBottomPadding] = useState(0);
 
     const fixedLayoutInnerElRef = useRef();
 
-    const { members, chat, sendMessage } = useChatContextProvider()
+    const { chat, sendMessage, openSocket, members } = useChatContextProvider()
 
     const updateBottomPadding = () => {
         const el = fixedLayoutInnerElRef.current;
@@ -35,8 +37,13 @@ export const Chat = ({
                 separator={false} 
                 before={
                     <PanelHeaderBack 
-                        onClick={() => onClose()}
+                        onClick={onClose}
                     />}
+                after={members.length > 0 &&
+                    <PanelHeaderButton onClick={onOpenChatMembersList}>
+                        <Icon28Users3Outline/>
+                    </PanelHeaderButton>
+                }
             >
                 <PanelHeaderContent
                     before={
@@ -65,7 +72,7 @@ export const Chat = ({
                             <Fragment>
                                 <WriteBarIcon 
                                     mode="send" 
-                                    disabled={writeBarText.length === 0}
+                                    disabled={writeBarText.length === 0 || !openSocket}
                                     onClick={() => sendMessageHandler()}
                                 />
                             </Fragment>

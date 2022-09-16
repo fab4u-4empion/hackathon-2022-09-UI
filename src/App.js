@@ -9,10 +9,11 @@ import { Profile } from './panels/profile';
 import { Chat } from './panels/chat';
 import { ChatListContextProvider } from './context/chatListContext';
 import { ChatContextProvider } from './context/chatContext';
+import { ChatMembersList } from './panels/chatMembersList';
 
 const App = () => {
 	const [scheme, setScheme] = useState('bright_light')
-	const [activeStory, setActiveStory] = React.useState("events")
+	const [activeStory, setActiveStory] = React.useState("messages")
 	const [messagesActivePanel, setMessagesActivePanel] = useState("messages")
 	const [chat, setChat] = useState(null)
 	const [hasTabbar, setHasTabbar] = useState(true)
@@ -24,13 +25,21 @@ const App = () => {
 		setHasTabbar(false)
 	}
 
+	const openChatMembersHandler = (chat) => {
+		setMessagesActivePanel("chatMembers")
+	}
+
 	const closeChatHanler = () => {
 		setMessagesActivePanel("messages")
 		setHasTabbar(true)
 	}
 
+	const closeChatMembersHandler = () => {
+		setMessagesActivePanel("chat")
+	}
+
 	return (
-		<ConfigProvider scheme={scheme}>
+		<ConfigProvider scheme={scheme} webviewType="internal">
 			<AdaptivityProvider>
 				<AppRoot>
 					<SplitLayout
@@ -89,8 +98,14 @@ const App = () => {
 									</Panel>
 									<Panel id="chat" className="chatPanel">
 										<ChatContextProvider chat={chat}>
-											<Chat onClose={closeChatHanler} />
+											<Chat 
+												onClose={closeChatHanler} 
+												onOpenChatMembersList={openChatMembersHandler}
+											/>
 										</ChatContextProvider>
+									</Panel>
+									<Panel id="chatMembers">
+										<ChatMembersList chat={chat} onClose={closeChatMembersHandler}/>
 									</Panel>
 								</View>
 								<View id="profile" activePanel="profile">
