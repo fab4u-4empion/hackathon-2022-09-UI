@@ -1,7 +1,6 @@
 import { Avatar, calcInitialsAvatarColor, Cell, Group, Header, InitialsAvatar, List, PanelHeader, PanelHeaderBack, Separator, SimpleCell, Title } from "@vkontakte/vkui";
 
-export const ChatMembersList = ({onClose, chat}) => {
-    console.log(chat.members);
+export const ChatMembersList = ({ onClose, chat, onOpenProfile }) => {
     return ( 
         <>
             <PanelHeader 
@@ -32,6 +31,7 @@ export const ChatMembersList = ({onClose, chat}) => {
                             }
                             key={e.ID}
                             subtitle={e.bio}
+                            onClick={() => onOpenProfile(e.ID)}
                         >
                             {e.username}
                         </SimpleCell>
