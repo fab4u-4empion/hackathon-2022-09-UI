@@ -4,7 +4,7 @@ import {
     Icon24MailOutline,
     Icon24MessageOutline,
     Icon24UserAddOutline} from "@vkontakte/icons"
-import {Group, PanelHeader, Button, Gradient, Text, SimpleCell, UsersStack, MiniInfoCell, Spinner, calcInitialsAvatarColor, InitialsAvatar} from "@vkontakte/vkui"
+import {Group, PanelHeader, Button, Gradient, Text, SimpleCell, UsersStack, MiniInfoCell, Spinner, calcInitialsAvatarColor, InitialsAvatar, PanelHeaderBack} from "@vkontakte/vkui"
 import {Header, Avatar, Title, Cell, List} from "@vkontakte/vkui";
 import {ButtonGroup} from "@vkontakte/vkui";
 import { Icon24ChevronCompactRight } from '@vkontakte/icons';
@@ -14,7 +14,7 @@ import axios from "axios";
 import { useTextDate } from "../hooks/useTextDate";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
-export const Profile = ({user}) => {
+export const Profile = ({user, hasBack, onClose}) => {
     const [userInfo, setUserInfo] = useState(null)
     const [currentUser] = useLocalStorage(null, "user")
 
@@ -28,7 +28,13 @@ export const Profile = ({user}) => {
 
     return (
         <>
-            <PanelHeader className="shadowPanelHeader" separator={false}>Профиль</PanelHeader>
+                <PanelHeader 
+                    className="shadowPanelHeader" 
+                    separator={false}
+                    before={hasBack && <PanelHeaderBack onClick={onClose}/>}
+                >
+                    Профиль
+                </PanelHeader>
             {!userInfo && <Group><Spinner /></Group>}
             {userInfo && 
                 <>

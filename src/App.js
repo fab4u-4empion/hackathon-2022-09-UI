@@ -14,7 +14,7 @@ import { useLocalStorage } from './hooks/useLocalStorage';
 
 const App = () => {
 	const [scheme, setScheme] = useState('bright_light')
-	const [activeStory, setActiveStory] = useState("profile")
+	const [activeStory, setActiveStory] = useState("messages")
 	const [messagesActivePanel, setMessagesActivePanel] = useState("messages")
 	const [chat, setChat] = useState(null)
 	const [hasTabbar, setHasTabbar] = useState(true)
@@ -40,6 +40,16 @@ const App = () => {
 
 	const closeChatMembersHandler = () => {
 		setMessagesActivePanel("chat")
+	}
+
+	const openProfileHandler = (user_id) => {
+		setUser(user_id)
+		setActiveStory("profile")
+	}
+
+	const closeProfileHandler = () => {
+		setUser(currentUser)
+		setActiveStory("messages")
 	}
 
 	return (
@@ -109,12 +119,12 @@ const App = () => {
 										</ChatContextProvider>
 									</Panel>
 									<Panel id="chatMembers">
-										<ChatMembersList chat={chat} onClose={closeChatMembersHandler}/>
+										<ChatMembersList onOpenProfile={openProfileHandler} chat={chat} onClose={closeChatMembersHandler}/>
 									</Panel>
 								</View>
 								<View id="profile" activePanel="profile">
 									<Panel id="profile">
-										<Profile user={user}/>
+										<Profile hasBack={!hasTabbar} onClose={closeProfileHandler} user={user}/>
 									</Panel>
 								</View>
 							</Epic>
