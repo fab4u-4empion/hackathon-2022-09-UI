@@ -8,19 +8,25 @@ import { Messages } from './panels/messages';
 import { Profile } from './panels/profile';
 import { Chat } from './panels/chat';
 import { ChatListContextProvider } from './context/chatListContext';
+import { ChatContextProvider } from './context/chatContext';
+import { ChatMembersList } from './panels/chatMembersList';
 
 const App = () => {
 	const [scheme, setScheme] = useState('bright_light')
-	const [activeStory, setActiveStory] = React.useState("profile")
+	const [activeStory, setActiveStory] = React.useState("events")
 	const [messagesActivePanel, setMessagesActivePanel] = useState("messages")
-	const [chatID, setChatID] = useState(null)
+	const [chat, setChat] = useState(null)
 	const [hasTabbar, setHasTabbar] = useState(true)
 	const onStoryChange = (e) => setActiveStory(e.currentTarget.dataset.story)
 
-	const openChatHandler = (chat_id) => {
-		setChatID(chat_id)
+	const openChatHandler = (chat) => {
+		setChat(chat)
 		setMessagesActivePanel("chat")
 		setHasTabbar(false)
+	}
+
+	const openChatMembersHandler = (chat) => {
+		setMessagesActivePanel("chatMembers")
 	}
 
 	const closeChatHanler = () => {
@@ -28,8 +34,12 @@ const App = () => {
 		setHasTabbar(true)
 	}
 
+	const closeChatMembersHandler = () => {
+		setMessagesActivePanel("chat")
+	}
+
 	return (
-		<ConfigProvider scheme={scheme}>
+		<ConfigProvider scheme={scheme} webviewType="internal">
 			<AdaptivityProvider>
 				<AppRoot>
 					<SplitLayout
@@ -87,7 +97,15 @@ const App = () => {
 										</ChatListContextProvider>
 									</Panel>
 									<Panel id="chat" className="chatPanel">
-										<Chat chatID={chatID} onClose={closeChatHanler}/>
+										<ChatContextProvider chat={chat}>
+											<Chat 
+												onClose={closeChatHanler} 
+												onOpenChatMembersList={openChatMembersHandler}
+											/>
+										</ChatContextProvider>
+									</Panel>
+									<Panel id="chatMembers">
+										<ChatMembersList chat={chat} onClose={closeChatMembersHandler}/>
 									</Panel>
 								</View>
 								<View id="profile" activePanel="profile">
