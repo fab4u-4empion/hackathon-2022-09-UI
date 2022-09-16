@@ -11,7 +11,7 @@ import { ChatListContextProvider } from './context/chatListContext';
 
 const App = () => {
 	const [scheme, setScheme] = useState('bright_light')
-	const [activeStory, setActiveStory] = React.useState("events")
+	const [activeStory, setActiveStory] = React.useState("profile")
 	const [messagesActivePanel, setMessagesActivePanel] = useState("messages")
 	const [chatID, setChatID] = useState(null)
 	const [hasTabbar, setHasTabbar] = useState(true)

@@ -5,6 +5,7 @@ body[scheme=bright_light], body[scheme=space_gray]  {
     --header_tint: var(--orange) !important;
     --accent: var(--orange) !important;
     --counter_primary_background: var(--orange) !important;
+    --button_primary_background: var(--orange) !important;
 }
 
 .shadowPanelHeader > .vkuiPanelHeader__fixed {
@@ -57,4 +58,25 @@ body[scheme=bright_light], body[scheme=space_gray]  {
     font-size: smaller;
     font-weight: 600;
     color: rgb(244, 122, 0);
+}
+
+.profileBIO {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+}
+
+.profileTitle {
+    margin-top: 20px;
+}
+
+.profileSubTitle {
+    color: var(--vkui--color_text_secondary);
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.profileFriends {
+    column-gap: 10px;
 }
