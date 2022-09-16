@@ -10,13 +10,17 @@ import { Chat } from './panels/chat';
 import { ChatListContextProvider } from './context/chatListContext';
 import { ChatContextProvider } from './context/chatContext';
 import { ChatMembersList } from './panels/chatMembersList';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 const App = () => {
 	const [scheme, setScheme] = useState('bright_light')
-	const [activeStory, setActiveStory] = React.useState("events")
+	const [activeStory, setActiveStory] = useState("profile")
 	const [messagesActivePanel, setMessagesActivePanel] = useState("messages")
 	const [chat, setChat] = useState(null)
 	const [hasTabbar, setHasTabbar] = useState(true)
+	const [currentUser] = useLocalStorage(null, "user")
+	const [user, setUser] = useState(currentUser)
+
 	const onStoryChange = (e) => setActiveStory(e.currentTarget.dataset.story)
 
 	const openChatHandler = (chat) => {
@@ -110,7 +114,7 @@ const App = () => {
 								</View>
 								<View id="profile" activePanel="profile">
 									<Panel id="profile">
-										<Profile/>
+										<Profile user={user}/>
 									</Panel>
 								</View>
 							</Epic>
