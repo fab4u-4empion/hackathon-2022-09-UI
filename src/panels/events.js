@@ -1,6 +1,72 @@
 import { Group, PanelHeader, CardGrid, Card, div, Title, Text, Caption, Button } from "@vkontakte/vkui"
+import { createContext, useContext, useEffect, useState } from "react";
+
+const axios = require('axios');
+
 
 export const Events = () => {
+
+    const [events, setEvents] = useState([])
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalCount, setTotalCount] = useState(0)
+    const [limit] = useState(15)
+    const [fetching, setFetching] = useState(true)
+    const [endOfPage, setEndOfPage] = useState(false)
+
+    useEffect(() => {
+        if (fetching) {
+            axios
+                .get(`https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Events?$select=name,timeStamp,descr`)
+                .then(response => {
+                    setEvents([...events, ...response.data.filter(e => events.findIndex(c => c.id == e.id) < 0)])
+                    setCurrentPage(prev => prev + 1)
+                    setTotalCount(response.headers["x-total-count"])
+                })
+                .finally(() => {
+                    setEndOfPage(false)
+                    setFetching(false)
+                })
+        }
+    }, [fetching])
+
+    useEffect(() => {
+        window.addEventListener("scroll", scrollHandler)
+        return function () {
+            window.removeEventListener("scroll", scrollHandler)
+        }
+    }, [])
+
+    useEffect(() => {
+        if (endOfPage && events.length < totalCount) {
+            setFetching(true)
+        }
+    }, [endOfPage])
+
+    const scrollHandler = (e) => {
+        if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100) {
+            setEndOfPage(true)
+        }
+    }
+
+    const newMessageHandler = (message) => {
+        const index = chats.findIndex(e => e.id == message.id)
+        if (index > -1) {
+            const temp = [...events]
+            temp.splice(index, 1)
+            setChats([message, ...temp])
+        } else {
+            setChats([message, ...events])
+        };
+    }
+
+    /* return (
+         <Context.Provider value={{
+             chats,
+             fetching
+         }}>
+             {children}
+         </Context.Provider>
+     )*/
     return (
         <>
             <PanelHeader>События</PanelHeader>
@@ -24,4 +90,5 @@ export const Events = () => {
             </Group>
         </>
     )
+
 }
