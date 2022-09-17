@@ -13,7 +13,7 @@ export const useSessionStorage = (initialValue, key) => {
 
     useEffect(() => {
         sessionStorage.setItem(key, JSON.stringify(value))
-    }, value)
+    }, [value])
 
     return [value, setValue]
 }

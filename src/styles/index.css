@@ -6,6 +6,9 @@ body[scheme=bright_light], body[scheme=space_gray]  {
     --accent: var(--orange) !important;
     --counter_primary_background: var(--orange) !important;
     --button_primary_background: var(--orange) !important;
+    --icon_outline_secondary: var(--orange) !important;
+    --overlay_status_icon: var(--orange) !important;
+    --button_tertiary_foreground: var(--orange) !important;
 }
 
 .shadowPanelHeader > .vkuiPanelHeader__fixed {
