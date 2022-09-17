@@ -18,7 +18,7 @@ const Index = () => {
         <>
             {loged && !willSignUp && <App/>}
             {!loged && !willSignUp && <SignIn setLoged={setLoged} onSignUp={setWillSignUp}/>}
-            {!loged && willSignUp && <SignUp setLoged={setLoged} setWillSignUp={setWillSignUp}/>}
+            {!loged && willSignUp && <SignUp onClose={() => setWillSignUp(false)} setLoged={setLoged} setWillSignUp={setWillSignUp}/>}
         </>
     )
 }
