@@ -3,8 +3,9 @@ import {
     Icon24CalendarOutline,
     Icon24MailOutline,
     Icon24MessageOutline,
-    Icon24UserAddOutline} from "@vkontakte/icons"
-import {Group, PanelHeader, Button, Gradient, Text, SimpleCell, UsersStack, MiniInfoCell, Spinner, calcInitialsAvatarColor, InitialsAvatar, PanelHeaderBack} from "@vkontakte/vkui"
+    Icon24UserAddOutline,
+    Icon28DoorArrowLeftOutline} from "@vkontakte/icons"
+import {Group, PanelHeader, Button, Gradient, Text, SimpleCell, UsersStack, MiniInfoCell, Spinner, calcInitialsAvatarColor, InitialsAvatar, PanelHeaderBack, PanelHeaderButton} from "@vkontakte/vkui"
 import {Header, Avatar, Title, Cell, List} from "@vkontakte/vkui";
 import {ButtonGroup} from "@vkontakte/vkui";
 import { Icon24ChevronCompactRight } from '@vkontakte/icons';
@@ -26,12 +27,18 @@ export const Profile = ({user, hasBack, onClose}) => {
             })
     }, [])
 
+    const exit = () => {
+        localStorage.removeItem("user")
+        location.reload()
+    }
+
     return (
         <>
                 <PanelHeader 
                     className="shadowPanelHeader" 
                     separator={false}
                     before={hasBack && <PanelHeaderBack onClick={onClose}/>}
+                    after={userInfo && currentUser == userInfo.ID && <PanelHeaderButton onClick={exit}><Icon28DoorArrowLeftOutline/></PanelHeaderButton>}
                 >
                     Профиль
                 </PanelHeader>

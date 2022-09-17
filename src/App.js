@@ -52,8 +52,8 @@ const App = () => {
 	}
 
 	return (
-		<ConfigProvider appearance={scheme} >
-			<AdaptivityProvider webviewType={WebviewType.INTERNAL}>
+		<ConfigProvider appearance={scheme} webviewType="internal">
+			<AdaptivityProvider>
 				<AppRoot>
 					<SplitLayout
 						header={<PanelHeader separator={false} />}
