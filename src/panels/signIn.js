@@ -1,4 +1,4 @@
-import { Group, PanelHeader, View, Panel, Button, FormLayout, FormItem, Input, FormLayoutGroup, DatePicker, Select, Textarea, Checkbox, Link, ConfigProvider, AdaptivityProvider, AppRoot, SplitLayout, ScreenSpinner, Header, Separator, Snackbar, Avatar, } from "@vkontakte/vkui"
+import { Group, PanelHeader, View, Panel, Button, FormLayout, FormItem, Input, FormLayoutGroup, DatePicker, Select, Textarea, Checkbox, Link, ConfigProvider, AdaptivityProvider, AppRoot, SplitLayout, ScreenSpinner, Header, Separator, Snackbar, Avatar, WebviewType, } from "@vkontakte/vkui"
 import React from "react";
 import '@vkontakte/vkui/dist/vkui.css';
 import axios from "axios";
@@ -56,6 +56,7 @@ export class SignIn extends React.Component {
                                     </Avatar>
                                 }
                                 action="Зарегистрироваться"
+                                onActionClick={() => this.props.onSignUp(true)}
                             >
                                 Такого пользователя не существует
                             </Snackbar> 
@@ -72,7 +73,7 @@ export class SignIn extends React.Component {
         const { nickname, password } = this.state;
 
         return (
-            <ConfigProvider>
+            <ConfigProvider webviewType={WebviewType.INTERNAL}>
                 <AdaptivityProvider>
                     <AppRoot>
                         <SplitLayout
@@ -119,6 +120,7 @@ export class SignIn extends React.Component {
                                                 <Button
                                                     size="l"
                                                     stretched
+                                                    onClick={() => this.props.onSignUp(true)}
                                                 >
                                                     Зарегистрироваться
                                                 </Button>

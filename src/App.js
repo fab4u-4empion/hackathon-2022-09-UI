@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, AdaptivityProvider, AppRoot, ConfigProvider, SplitLayout, SplitCol, PanelHeader, Epic, Tabbar, TabbarItem, Panel } from '@vkontakte/vkui';
+import { View, AdaptivityProvider, AppRoot, ConfigProvider, SplitLayout, SplitCol, PanelHeader, Epic, Tabbar, TabbarItem, Panel, WebviewType } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import { Icon28MessageOutline, Icon28NewsfeedOutline, Icon28UserCircleOutline } from '@vkontakte/icons';
 import { Events } from './panels/events';
@@ -12,7 +12,7 @@ import { ChatMembersList } from './panels/chatMembersList';
 import { useLocalStorage } from './hooks/useLocalStorage';
 
 const App = () => {
-	const [scheme, setScheme] = useState('bright_light')
+	const [scheme, setScheme] = useState('light')
 	const [activeStory, setActiveStory] = useState("events")
 	const [messagesActivePanel, setMessagesActivePanel] = useState("messages")
 	const [chat, setChat] = useState(null)
@@ -52,8 +52,8 @@ const App = () => {
 	}
 
 	return (
-		<ConfigProvider scheme={scheme} webviewType="internal">
-			<AdaptivityProvider>
+		<ConfigProvider appearance={scheme} >
+			<AdaptivityProvider webviewType={WebviewType.INTERNAL}>
 				<AppRoot>
 					<SplitLayout
 						header={<PanelHeader separator={false} />}

@@ -1,8 +1,9 @@
-import { Group, PanelHeader, View, Panel, Button, FormLayout, FormItem, Input, FormLayoutGroup, DatePicker, Select, Textarea, Checkbox, Link, ConfigProvider, AdaptivityProvider, AppRoot, SplitLayout, } from "@vkontakte/vkui"
+import { Group, PanelHeader, View, Panel, Button, FormLayout, FormItem, Input, FormLayoutGroup, DatePicker, Select, Textarea, Checkbox, Link, ConfigProvider, AdaptivityProvider, AppRoot, SplitLayout, WebviewType, ScreenSpinner, } from "@vkontakte/vkui"
+import axios from "axios";
 import React from "react";
-import '@vkontakte/vkui/dist/vkui.css';
 
-class SignUp extends React.Component {
+
+export class SignUp extends React.Component {
 
     constructor(props) {
         super(props);
@@ -11,18 +12,16 @@ class SignUp extends React.Component {
             email: "",
             password1: "",
             password2: "",
-            purpose: "",
-            showPatronym: true,
+            bio: "",
+            date: { day: 1, month: 1, year: 2002 },
+            sex: 0,
+            phoneNumber: "",
+            nickname: "",
+            popout: null
         };
 
-        this.addressItems = [
-            { label: "Город", name: "city" },
-            { label: "Улица", name: "street" },
-            { label: "Дом", name: "build" },
-        ];
-
         this.onChange = this.onChange.bind(this);
-        this.onRemove = this.onRemove.bind(this);
+        this.onSignUp = this.onSignUp.bind(this);
     }
 
     onChange(e) {
@@ -30,38 +29,47 @@ class SignUp extends React.Component {
         this.setState({ [name]: value });
     }
 
-    onShowPatronym() {
-        this.setState({ showPatronym: true });
-    }
-
-    onRemove(e) {
-        this.setState({ showPatronym: false });
+    onSignUp() {
+        this.setState({ popout: <ScreenSpinner state="loading" /> })
+        axios
+            .post("https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Users", {
+                username: this.state.nickname,
+                email: this.state.email,
+                phoneNumber: this.state.phoneNumber,
+                bio: this.state.bio,
+                dateOfBirth: new Date(this.state.date.year, this.state.date.month - 1, this.state.date.day, 3, 0, 0).toISOString().substring(0, 10)
+            })
+            .then(response => {
+                this.setState({ popout: <ScreenSpinner state="done" /> })
+                localStorage.setItem("user", JSON.stringify(response.data.ID))
+                setTimeout(() => { this.props.setLoged(true), this.props.setWillSignUp(false) } , 1500)
+            })
+            .catch((e) => {
+                console.log(e);
+                this.setState({ popout: <ScreenSpinner state="error" /> })
+                setTimeout(() => this.setState({ popout: null }), 1500)
+            })
     }
 
     render() {
-        const { email, password1, password2, purpose, showPatronym } = this.state;
+        const { email, password1, password2, nickname } = this.state;
 
         return (
-            <ConfigProvider>
-                <AdaptivityProvider>
+            <ConfigProvider webviewType={WebviewType.INTERNAL}>
+                <AdaptivityProvider hasMouse={true}>
                     <AppRoot>
                         <SplitLayout
                             header={<PanelHeader separator={false} />}
                             style={{ justifyContent: "center" }}
+                            popout={this.state.popout}
                         >
                             <View activePanel="new-user">
                                 <Panel id="new-user">
-                                    <PanelHeader>Регистрация</PanelHeader>
+                                    <PanelHeader className="shadowPanelHeader" separator={false}>Регистрация</PanelHeader>
                                     <Group>
                                         <FormLayout>
                                             <FormItem
                                                 top="E-mail"
-                                                status={email ? "valid" : "error"}
-                                                bottom={
-                                                    email
-                                                        ? "Электронная почта введена верно!"
-                                                        : "Пожалуйста, введите электронную почту"
-                                                }
                                             >
                                                 <Input
                                                     type="email"
@@ -73,7 +81,7 @@ class SignUp extends React.Component {
 
                                             <FormLayoutGroup >
                                                 <FormItem top="Никнейм">
-                                                    <Input />
+                                                    <Input name="nickname" value={this.state.nickname} onChange={this.onChange}/>
                                                 </FormItem>
                                             </FormLayoutGroup>
 
@@ -111,7 +119,13 @@ class SignUp extends React.Component {
 
                                             <FormLayoutGroup>
                                                 <FormItem top="Номер телефона">
-                                                    <Input type="phone" placeholder="+375290000000" />
+                                                    <Input 
+                                                        value={this.state.phoneNumber} 
+                                                        type="phone" 
+                                                        placeholder="+375290000000"
+                                                        name="phoneNumber"
+                                                        onChange={this.onChange} 
+                                                    />
                                                 </FormItem>
                                             </FormLayoutGroup>
 
@@ -122,43 +136,43 @@ class SignUp extends React.Component {
                                                     dayPlaceholder="ДД"
                                                     monthPlaceholder="MM"
                                                     yearPlaceholder="ГГ"
+                                                    defaultValue={this.state.date}
+                                                    onDateChange={value => this.setState({date: value})}
                                                 />
                                             </FormItem>
 
                                             <FormItem top="Пол">
                                                 <Select
                                                     placeholder="Выберите пол"
+                                                    defaultValue={0}
+                                                    name="sex"
+                                                    onChange={this.onChange}
                                                     options={[
                                                         {
-                                                            value: "1",
+                                                            value: 1,
                                                             label: "Мужской",
                                                         },
                                                         {
-                                                            value: "2",
+                                                            value: 2,
                                                             label: "Женский",
                                                         },
                                                         {
-                                                            value: "3",
+                                                            value: 3,
                                                             label: "Другой",
                                                         },
                                                     ]}
                                                 />
                                             </FormItem>
-
-                                            {this.addressItems.map(({ label, name }) => (
-                                                <FormItem top={label} key={name}>
-                                                    <Input name={name} />
-                                                </FormItem>
-                                            ))}
-
                                             <FormItem top="О себе">
-                                                <Textarea />
+                                                <Textarea name="bio" onChange={this.onChange} value={this.state.bio}/>
                                             </FormItem>
-                                            <Checkbox>
-                                                Согласен со всем <Link>этим</Link>
-                                            </Checkbox>
                                             <FormItem>
-                                                <Button size="l" stretched>
+                                                <Button 
+                                                    size="l" 
+                                                    stretched
+                                                    onClick={this.onSignUp}
+                                                    disabled={password1 == "" || password2 == "" || password1 != password2 || nickname == ""}
+                                                >
                                                     Зарегистрироваться
                                                 </Button>
                                             </FormItem>
@@ -173,4 +187,3 @@ class SignUp extends React.Component {
         );
     }
 }
-export default SignUp
