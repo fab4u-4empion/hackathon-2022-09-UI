@@ -1,5 +1,5 @@
 import { Group, PanelHeader, CardGrid, Card, div, Title, Text, Caption, Button } from "@vkontakte/vkui"
-import { createContext, useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const axios = require('axios');
 
@@ -18,9 +18,8 @@ export const Events = () => {
             axios
                 .get(`https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Events?$select=name,timeStamp,descr`)
                 .then(response => {
-                    setEvents([...events, ...response.data.filter(e => events.findIndex(c => c.id == e.id) < 0)])
+                    setEvents(response.data.value)
                     setCurrentPage(prev => prev + 1)
-                    setTotalCount(response.headers["x-total-count"])
                 })
                 .finally(() => {
                     setEndOfPage(false)
@@ -48,45 +47,35 @@ export const Events = () => {
         }
     }
 
-    const newMessageHandler = (message) => {
-        const index = chats.findIndex(e => e.id == message.id)
-        if (index > -1) {
-            const temp = [...events]
-            temp.splice(index, 1)
-            setChats([message, ...temp])
-        } else {
-            setChats([message, ...events])
-        };
-    }
-
-    /* return (
-         <Context.Provider value={{
-             chats,
-             fetching
-         }}>
-             {children}
-         </Context.Provider>
-     )*/
     return (
         <>
             <PanelHeader>События</PanelHeader>
             <Group style={{ height: "1000px" }}>
-                <CardGrid size="l">
-                    <Card mode="shadow">
-                        <div style={{ height: 100 }}>
-                            <Title level="2" style={{ marginBottom: 15 }}>
-                                Название
-                            </Title>
-                            <Text style={{ marginBottom: 15 }}>Описание</Text>
-                            <Caption level="3">
-                                01.01.2020
-                            </Caption>
-                        </div>
-                        <Button stretched mode="secondary" size="s">
-                            Добавить
-                        </Button>
-                    </Card>
-                </CardGrid>
+                <List>
+                    {
+                        events.map(e => {
+                            return (
+                                <CardGrid size="l">
+                                    <Card mode="shadow">
+                                        <div style={{ height: 100 }}>
+                                            <Title level="2" style={{ marginBottom: 15 }}>
+                                                Название
+                                            </Title>
+                                            <Text style={{ marginBottom: 15 }}>Описание</Text>
+                                            <Caption level="3">
+                                                01.01.2020
+                                            </Caption>
+                                        </div>
+                                        <Button stretched mode="secondary" size="s">
+                                            Добавить
+                                        </Button>
+                                    </Card>
+                                </CardGrid>
+                            )
+                        })
+                    }
+                    {fetching && <Spinner />}
+                </List>
             </Group>
         </>
     )
