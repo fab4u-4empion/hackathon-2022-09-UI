@@ -113,3 +113,7 @@ body[scheme=bright_light], body[scheme=space_gray]  {
     align-items: center;
     row-gap: 5px;
 }
+
+.mapGroup > .vkuiGroup__inner {
+    height: calc(100vh - 56px * 2 - 8px);
+}

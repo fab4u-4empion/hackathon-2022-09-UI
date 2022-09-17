@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, AdaptivityProvider, AppRoot, ConfigProvider, SplitLayout, SplitCol, PanelHeader, Epic, Tabbar, TabbarItem, Panel } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import './styles/index.css'
-import { Icon28MessageOutline, Icon28NewsfeedOutline, Icon28UserCircleOutline } from '@vkontakte/icons';
+import { Icon28MessageOutline, Icon28NewsfeedOutline, Icon28PlaceOutline, Icon28UserCircleOutline } from '@vkontakte/icons';
 import { Events } from './panels/events';
 import { Messages } from './panels/messages';
 import { Profile } from './panels/profile';
@@ -11,10 +11,11 @@ import { ChatListContextProvider } from './context/chatListContext';
 import { ChatContextProvider } from './context/chatContext';
 import { ChatMembersList } from './panels/chatMembersList';
 import { useLocalStorage } from './hooks/useLocalStorage';
+import { MapPanel } from './panels/map';
 
 const App = () => {
 	const [scheme, setScheme] = useState('bright_light')
-	const [activeStory, setActiveStory] = useState("messages")
+	const [activeStory, setActiveStory] = useState("map")
 	const [messagesActivePanel, setMessagesActivePanel] = useState("messages")
 	const [chat, setChat] = useState(null)
 	const [hasTabbar, setHasTabbar] = useState(true)
@@ -80,6 +81,14 @@ const App = () => {
 										</TabbarItem>
 										<TabbarItem
 											onClick={onStoryChange}
+											selected={activeStory === "map"}
+											data-story="map"
+											text="Карта"
+										>
+											<Icon28PlaceOutline />
+										</TabbarItem>
+										<TabbarItem
+											onClick={onStoryChange}
 											selected={activeStory === "messages"}
 											data-story="messages"
 											text="Сообщения"
@@ -100,6 +109,11 @@ const App = () => {
 								<View id="events" activePanel="events">
 									<Panel id="events">
 										<Events />
+									</Panel>
+								</View>
+								<View id="map" activePanel='map'>
+									<Panel id='map'>
+										<MapPanel/>
 									</Panel>
 								</View>
 								<View id="messages" activePanel={messagesActivePanel}>
