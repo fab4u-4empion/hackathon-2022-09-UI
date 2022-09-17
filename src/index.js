@@ -3,9 +3,6 @@ import ReactDOM from "react-dom";
 import bridge from "@vkontakte/vk-bridge";
 import App from "./App";
 import { SignIn } from "./panels/signIn";
-import { useLocalStorage } from "./hooks/useLocalStorage";
-import axios from "axios";
-import { ScreenSpinner } from "@vkontakte/vkui";
 import './styles/index.css'
 
 // Init VK  Mini App

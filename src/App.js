@@ -41,6 +41,16 @@ const App = () => {
 		setMessagesActivePanel("chat")
 	}
 
+	const openProfileHandler = (user_id) => {
+		setUser(user_id)
+		setActiveStory("profile")
+	}
+
+	const closeProfileHandler = () => {
+		setUser(currentUser)
+		setActiveStory("messages")
+	}
+
 	return (
 		<ConfigProvider scheme={scheme} webviewType="internal">
 			<AdaptivityProvider>
@@ -108,12 +118,12 @@ const App = () => {
 										</ChatContextProvider>
 									</Panel>
 									<Panel id="chatMembers">
-										<ChatMembersList chat={chat} onClose={closeChatMembersHandler}/>
+										<ChatMembersList onOpenProfile={openProfileHandler} chat={chat} onClose={closeChatMembersHandler}/>
 									</Panel>
 								</View>
 								<View id="profile" activePanel="profile">
 									<Panel id="profile">
-										<Profile user={user}/>
+										<Profile hasBack={!hasTabbar} onClose={closeProfileHandler} user={user}/>
 									</Panel>
 								</View>
 							</Epic>
