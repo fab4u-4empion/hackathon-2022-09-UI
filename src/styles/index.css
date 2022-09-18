@@ -247,3 +247,7 @@ body[scheme=bright_light], body[scheme=space_gray]  {
 .close.active {
     visibility: visible;
 }
+
+.rangeSlider > .vkuiFormItem__bottom {
+    text-align: center;
+}
