@@ -52,6 +52,16 @@ const App = () => {
 		setActiveStory("messages")
 	}
 
+	const openEventsHandler = (events) => {
+		setChat(events)
+		setMessagesActivePanel("events")
+		setHasTabbar(false)
+	}
+	const closeEventsHanler = () => {
+		setMessagesActivePanel("messages")
+		setHasTabbar(true)
+	}
+
 	return (
 		<ConfigProvider appearance={scheme} >
 			<AdaptivityProvider webviewType={WebviewType.INTERNAL}>
@@ -107,7 +117,10 @@ const App = () => {
 							>
 								<View id="events" activePanel="events">
 									<Panel id="events">
-										<Events />
+										<Events
+											onEventsOpen={openEventsHandler}
+											onClose={closeEventsHanler}
+										/>
 									</Panel>
 								</View>
 								<View id="map" activePanel='map'>
@@ -125,19 +138,19 @@ const App = () => {
 									</Panel>
 									<Panel id="chat" className="chatPanel">
 										<ChatContextProvider chat={chat}>
-											<Chat 
-												onClose={closeChatHanler} 
+											<Chat
+												onClose={closeChatHanler}
 												onOpenChatMembersList={openChatMembersHandler}
 											/>
 										</ChatContextProvider>
 									</Panel>
 									<Panel id="chatMembers">
-										<ChatMembersList onOpenProfile={openProfileHandler} chat={chat} onClose={closeChatMembersHandler}/>
+										<ChatMembersList onOpenProfile={openProfileHandler} chat={chat} onClose={closeChatMembersHandler} />
 									</Panel>
 								</View>
 								<View id="profile" activePanel="profile">
 									<Panel id="profile">
-										<Profile hasBack={!hasTabbar} onClose={closeProfileHandler} user={user}/>
+										<Profile hasBack={!hasTabbar} onClose={closeProfileHandler} user={user} />
 									</Panel>
 								</View>
 							</Epic>
