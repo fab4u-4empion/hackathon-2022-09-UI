@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, AdaptivityProvider, AppRoot, ConfigProvider, SplitLayout, SplitCol, PanelHeader, Epic, Tabbar, TabbarItem, Panel, WebviewType } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import { Icon28MessageOutline, Icon28NewsfeedOutline, Icon28UserCircleOutline } from '@vkontakte/icons';
+import { Icon28MessageOutline, Icon28NewsfeedOutline, Icon28PlaceOutline, Icon28UserCircleOutline } from '@vkontakte/icons';
 import { Events } from './panels/events';
 import { Messages } from './panels/messages';
 import { Profile } from './panels/profile';
