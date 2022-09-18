@@ -1,4 +1,5 @@
-import { Group, PanelHeader, CardGrid, Card, div, Title, Text, Caption, Button } from "@vkontakte/vkui"
+import { Icon12Add, Icon16InfoOutline, Icon24Add, Icon24InfoCircleOutline } from "@vkontakte/icons";
+import { Group, PanelHeader, CardGrid, Card, div, Title, Text, Caption, Button, List, Spinner, Paragraph, InfoRow, ButtonGroup, IconButton } from "@vkontakte/vkui"
 import { useEffect, useState } from "react";
 
 const axios = require('axios');
@@ -16,9 +17,10 @@ export const Events = () => {
     useEffect(() => {
         if (fetching) {
             axios
-                .get(`https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Events?$select=name,timeStamp,descr`)
+                .get(`https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Events?$count=true&$top=${limit}&$skip=${(currentPage - 1) * limit}`)
                 .then(response => {
-                    setEvents(response.data.value)
+                    setEvents([...events, ...response.data.value])
+                    setTotalCount(response.data["@odata.count"])
                     setCurrentPage(prev => prev + 1)
                 })
                 .finally(() => {
@@ -49,26 +51,38 @@ export const Events = () => {
 
     return (
         <>
-            <PanelHeader>События</PanelHeader>
-            <Group style={{ height: "1000px" }}>
+            <PanelHeader className="shadowPanelHeader" separator={false}>События</PanelHeader>
+            <Group>
                 <List>
                     {
                         events.map(e => {
                             return (
-                                <CardGrid size="l">
-                                    <Card mode="shadow">
-                                        <div style={{ height: 100 }}>
-                                            <Title level="2" style={{ marginBottom: 15 }}>
-                                                Название
+                                <CardGrid size="l" key={e.ID}>
+                                    <Card mode="outline">
+                                        <div className="eventCardInner">
+                                            <Title level="1" style={{ marginBottom: 5 }}>
+                                                {e.name}
                                             </Title>
-                                            <Text style={{ marginBottom: 15 }}>Описание</Text>
-                                            <Caption level="3">
-                                                01.01.2020
-                                            </Caption>
-                                        </div>
-                                        <Button stretched mode="secondary" size="s">
-                                            Добавить
-                                        </Button>
+                                            <Text className="eventDescription">
+                                                {e.descr}
+                                            </Text>
+                                            <div className="eventBottom">
+                                                <InfoRow className="eventBottomItem" header="Организатор">{e.createdBy}</InfoRow>
+                                                <InfoRow className="eventBottomItem" header="Дата проведения">{
+                                                    new Date(e.timeStamp).toLocaleString("ru-RU", {
+                                                        day: "numeric",
+                                                        month: "short",
+                                                        year: "numeric",
+                                                        hour: "numeric",
+                                                        minute: "numeric"
+                                                    })
+                                                }</InfoRow>
+                                            </div>
+                                            <div className="eventBottom">
+                                                <Button mode="outline" before={<Icon12Add />}>Присоединиться</Button>
+                                            </div>
+                                            <IconButton className="eventInfoButton"><Icon24InfoCircleOutline/></IconButton>
+                                        </div> 
                                     </Card>
                                 </CardGrid>
                             )

@@ -9,6 +9,8 @@ body[scheme=bright_light], body[scheme=space_gray]  {
     --icon_outline_secondary: var(--orange) !important;
     --overlay_status_icon: var(--orange) !important;
     --button_tertiary_foreground: var(--orange) !important;
+    --button_outline_foreground: var(--orange) !important;
+    --button_outline_border: var(--orange) !important;
 }
 
 .shadowPanelHeader > .vkuiPanelHeader__fixed {
@@ -115,4 +117,40 @@ body[scheme=bright_light], body[scheme=space_gray]  {
     flex-direction: column;
     align-items: center;
     row-gap: 5px;
+}
+
+.eventCardInner {
+    padding: 10px;
+    position: relative;
+}
+
+.eventDescription {
+    font-size: 15px;
+    color: rgb(102, 102, 102);
+}
+
+.eventBottom {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.eventBottomItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.eventInfoButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: var(--orange);
+}
+
+.eventCardInner > .vkuiTitle {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 90%;
 }
