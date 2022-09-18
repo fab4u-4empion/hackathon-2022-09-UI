@@ -64,7 +64,7 @@ export const Events = ({onOpenModal}) => {
                         events.map(e => {
                             return (
                                 <CardGrid size="l" key={e.ID}>
-                                    <Card mode="outline">
+                                    <Card mode="shadow">
                                         <div className="eventCardInner">
                                             <Title level="1" style={{ marginBottom: 5 }}>
                                                 {e.name}
