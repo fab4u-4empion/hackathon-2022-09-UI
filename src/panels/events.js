@@ -1,11 +1,11 @@
-import { Icon12Add, Icon16InfoOutline, Icon24Add, Icon24InfoCircleOutline } from "@vkontakte/icons";
-import { Group, PanelHeader, CardGrid, Card, div, Title, Text, Caption, Button, List, Spinner, Paragraph, InfoRow, ButtonGroup, IconButton } from "@vkontakte/vkui"
+import { Icon12Add, Icon16InfoOutline, Icon24Add, Icon24Filter, Icon24InfoCircleOutline } from "@vkontakte/icons";
+import { Group, PanelHeader, CardGrid, Card, div, Title, Text, Caption, Button, List, Spinner, Paragraph, InfoRow, ButtonGroup, IconButton, PanelHeaderButton } from "@vkontakte/vkui"
 import { useEffect, useState } from "react";
 
 const axios = require('axios');
 
 
-export const Events = () => {
+export const Events = ({onOpenModal}) => {
 
     const [events, setEvents] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
@@ -51,7 +51,13 @@ export const Events = () => {
 
     return (
         <>
-            <PanelHeader className="shadowPanelHeader" separator={false}>События</PanelHeader>
+            <PanelHeader 
+                className="shadowPanelHeader" 
+                separator={false}
+                after={
+                    <PanelHeaderButton onClick={() => onOpenModal("filter")}><Icon24Filter/></PanelHeaderButton>
+                }
+            >События</PanelHeader>
             <Group>
                 <List>
                     {
@@ -77,9 +83,6 @@ export const Events = () => {
                                                         minute: "numeric"
                                                     })
                                                 }</InfoRow>
-                                            </div>
-                                            <div className="eventBottom">
-                                                <Button mode="outline" before={<Icon12Add />}>Присоединиться</Button>
                                             </div>
                                             <IconButton className="eventInfoButton"><Icon24InfoCircleOutline/></IconButton>
                                         </div> 
