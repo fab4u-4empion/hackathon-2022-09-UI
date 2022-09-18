@@ -10,6 +10,7 @@ import { ChatListContextProvider } from './context/chatListContext';
 import { ChatContextProvider } from './context/chatContext';
 import { ChatMembersList } from './panels/chatMembersList';
 import { useLocalStorage } from './hooks/useLocalStorage';
+import { MapPanel } from './panels/map';
 
 const App = () => {
 	const [scheme, setScheme] = useState('light')
@@ -79,6 +80,14 @@ const App = () => {
 										</TabbarItem>
 										<TabbarItem
 											onClick={onStoryChange}
+											selected={activeStory === "map"}
+											data-story="map"
+											text="Карта"
+										>
+											<Icon28PlaceOutline />
+										</TabbarItem>
+										<TabbarItem
+											onClick={onStoryChange}
 											selected={activeStory === "messages"}
 											data-story="messages"
 											text="Сообщения"
@@ -99,6 +108,11 @@ const App = () => {
 								<View id="events" activePanel="events">
 									<Panel id="events">
 										<Events />
+									</Panel>
+								</View>
+								<View id="map" activePanel='map'>
+									<Panel id='map'>
+										<MapPanel/>
 									</Panel>
 								</View>
 								<View id="messages" activePanel={messagesActivePanel}>
