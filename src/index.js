@@ -1,16 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import bridge from "@vkontakte/vk-bridge";
 import App from "./App";
-import SignUp from "./panels/signUp";
+import { SignIn } from "./panels/signIn";
+import './styles/index.css'
+import { SignUp } from "./panels/signUp";
+import '@vkontakte/vkui/dist/vkui.css';
 
 // Init VK  Mini App
 bridge.send("VKWebAppInit");
 
-localStorage.setItem("user", JSON.stringify("027b4656-bccc-4a0a-9508-6a9ae173bb95"))
+const Index = () => {
+    const [loged, setLoged] = useState(JSON.parse(localStorage.getItem("user"))) 
+    const [willSignUp, setWillSignUp] = useState(false)
 
-ReactDOM.render(<App />, document.getElementById("root"));
+    return (
+        <>
+            {loged && !willSignUp && <App/>}
+            {!loged && !willSignUp && <SignIn setLoged={setLoged} onSignUp={setWillSignUp}/>}
+            {!loged && willSignUp && <SignUp setLoged={setLoged} setWillSignUp={setWillSignUp}/>}
+        </>
+    )
+}
 
-// if (process.env.NODE_ENV === "development") {
-//   import("./eruda").then(({ default: eruda }) => {}); //runtime download
-// }
+ReactDOM.render(<Index/>, document.getElementById("root"));
+
+if (process.env.NODE_ENV === "development") {
+  import("./eruda").then(({ default: eruda }) => {}); //runtime download
+}
