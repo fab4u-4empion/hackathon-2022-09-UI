@@ -17,7 +17,7 @@ export const Events = () => {
     useEffect(() => {
         if (fetching) {
             axios
-                .get(`https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Events?$count=true&$top=${limit}&$skip=${(currentPage - 1) * limit}`)
+                .get(`https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Events?$count=true&$top=${limit}&$skip=${(currentPage - 1) * limit}&$expand=organizer($select=username)`)
                 .then(response => {
                     setEvents([...events, ...response.data.value])
                     setTotalCount(response.data["@odata.count"])
@@ -58,7 +58,7 @@ export const Events = () => {
                         events.map(e => {
                             return (
                                 <CardGrid size="l" key={e.ID}>
-                                    <Card mode="outline">
+                                    <Card mode="shadow">
                                         <div className="eventCardInner">
                                             <Title level="1" style={{ marginBottom: 5 }}>
                                                 {e.name}
@@ -67,7 +67,7 @@ export const Events = () => {
                                                 {e.descr}
                                             </Text>
                                             <div className="eventBottom">
-                                                <InfoRow className="eventBottomItem" header="Организатор">{e.createdBy}</InfoRow>
+                                                <InfoRow className="eventBottomItem" header="Организатор">{e.organizer.username}</InfoRow>
                                                 <InfoRow className="eventBottomItem" header="Дата проведения">{
                                                     new Date(e.timeStamp).toLocaleString("ru-RU", {
                                                         day: "numeric",
@@ -77,9 +77,6 @@ export const Events = () => {
                                                         minute: "numeric"
                                                     })
                                                 }</InfoRow>
-                                            </div>
-                                            <div className="eventBottom">
-                                                <Button mode="outline" before={<Icon12Add />}>Присоединиться</Button>
                                             </div>
                                             <IconButton className="eventInfoButton"><Icon24InfoCircleOutline/></IconButton>
                                         </div> 
