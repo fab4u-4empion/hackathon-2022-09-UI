@@ -15,7 +15,7 @@ import { MapPanel } from './panels/map';
 
 const App = () => {
 	const [scheme, setScheme] = useState('bright_light')
-	const [activeStory, setActiveStory] = useState("map")
+	const [activeStory, setActiveStory] = useState("events")
 	const [messagesActivePanel, setMessagesActivePanel] = useState("messages")
 	const [chat, setChat] = useState(null)
 	const [hasTabbar, setHasTabbar] = useState(true)
