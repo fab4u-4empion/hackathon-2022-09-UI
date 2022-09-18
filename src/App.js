@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, AdaptivityProvider, AppRoot, ConfigProvider, SplitLayout, SplitCol, PanelHeader, Epic, Tabbar, TabbarItem, Panel } from '@vkontakte/vkui';
+import { View, AdaptivityProvider, AppRoot, ConfigProvider, SplitLayout, SplitCol, PanelHeader, Epic, Tabbar, TabbarItem, Panel, WebviewType } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import { Icon28MessageOutline, Icon28NewsfeedOutline, Icon28UserCircleOutline } from '@vkontakte/icons';
+import { Icon28MessageOutline, Icon28NewsfeedOutline, Icon28PlaceOutline, Icon28UserCircleOutline } from '@vkontakte/icons';
 import { Events } from './panels/events';
 import { Messages } from './panels/messages';
 import { Profile } from './panels/profile';
@@ -10,9 +10,10 @@ import { ChatListContextProvider } from './context/chatListContext';
 import { ChatContextProvider } from './context/chatContext';
 import { ChatMembersList } from './panels/chatMembersList';
 import { useLocalStorage } from './hooks/useLocalStorage';
+import { MapPanel } from './panels/map';
 
 const App = () => {
-	const [scheme, setScheme] = useState('bright_light')
+	const [scheme, setScheme] = useState('light')
 	const [activeStory, setActiveStory] = useState("events")
 	const [messagesActivePanel, setMessagesActivePanel] = useState("messages")
 	const [chat, setChat] = useState(null)
@@ -62,8 +63,8 @@ const App = () => {
 	}
 
 	return (
-		<ConfigProvider scheme={scheme} webviewType="internal">
-			<AdaptivityProvider>
+		<ConfigProvider appearance={scheme} >
+			<AdaptivityProvider webviewType={WebviewType.INTERNAL}>
 				<AppRoot>
 					<SplitLayout
 						header={<PanelHeader separator={false} />}
@@ -86,6 +87,14 @@ const App = () => {
 											text="События"
 										>
 											<Icon28NewsfeedOutline />
+										</TabbarItem>
+										<TabbarItem
+											onClick={onStoryChange}
+											selected={activeStory === "map"}
+											data-story="map"
+											text="Карта"
+										>
+											<Icon28PlaceOutline />
 										</TabbarItem>
 										<TabbarItem
 											onClick={onStoryChange}
@@ -112,6 +121,11 @@ const App = () => {
 											onEventsOpen={openEventsHandler}
 											onClose={closeEventsHanler}
 										/>
+									</Panel>
+								</View>
+								<View id="map" activePanel='map'>
+									<Panel id='map'>
+										<MapPanel/>
 									</Panel>
 								</View>
 								<View id="messages" activePanel={messagesActivePanel}>

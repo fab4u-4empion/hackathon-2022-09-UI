@@ -4,6 +4,8 @@ import bridge from "@vkontakte/vk-bridge";
 import App from "./App";
 import { SignIn } from "./panels/signIn";
 import './styles/index.css'
+import { SignUp } from "./panels/signUp";
+import '@vkontakte/vkui/dist/vkui.css';
 
 // Init VK  Mini App
 bridge.send("VKWebAppInit");
@@ -15,13 +17,14 @@ const Index = () => {
     return (
         <>
             {loged && !willSignUp && <App/>}
-            {!loged && !willSignUp && <SignIn setLoged={setLoged}/>}
+            {!loged && !willSignUp && <SignIn setLoged={setLoged} onSignUp={setWillSignUp}/>}
+            {!loged && willSignUp && <SignUp setLoged={setLoged} setWillSignUp={setWillSignUp}/>}
         </>
     )
 }
 
 ReactDOM.render(<Index/>, document.getElementById("root"));
 
-// if (process.env.NODE_ENV === "development") {
-//   import("./eruda").then(({ default: eruda }) => {}); //runtime download
-// }
+if (process.env.NODE_ENV === "development") {
+  import("./eruda").then(({ default: eruda }) => {}); //runtime download
+}
