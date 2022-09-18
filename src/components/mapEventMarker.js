@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Icon24Add } from '@vkontakte/icons';
 
-export const MapMarker = () => {
+export const MapEventMarker = ({event}) => {
 
     const [timer, setTimer] = useState(null)
 
@@ -40,9 +40,15 @@ export const MapMarker = () => {
             <div onClick={onClickHandler} onTouchEnd={onTouchEndHandler} onTouchStart={onTouchStartHandler} className="mapMarkerInner">
                 <div className="mapMarkerInfo">
                     <div className="mapMarkerContent">
-                        <div className="mapMarkerTitle">Название ивента</div>
-                        <div className="mapMarkerText">10.09.2022 10:00</div>
-                        <div className="mapMarkerMore">какая-то дополнительная информация об ивента</div>
+                        <div className="mapMarkerTitle">{event.name}</div>
+                        <div className="mapMarkerText">{new Date(event.timeStamp).toLocaleString("ru-RU", {
+                            day: "numeric",
+                            month: "numeric",
+                            year: "2-digit",
+                            hour: "numeric",
+                            minute: "numeric"
+                        })}</div>
+                        <div className="mapMarkerMore">{event.descr}</div>
                     </div>
                 </div>
                 <div className="mapBottom">

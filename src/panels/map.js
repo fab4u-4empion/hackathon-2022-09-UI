@@ -1,11 +1,20 @@
 import { Group, PanelHeader, Spinner } from "@vkontakte/vkui"
+import axios from "axios";
 import GoogleMapReact from 'google-map-react';
-import { useState } from "react";
-import { MapMarker } from "../components/mapMarker";
+import { useEffect, useState } from "react";
+import { MapEventMarker } from "../components/mapEventMarker";
 
 export const MapPanel = () => {
 
-    const [events, setEvents] = useState([])
+    const [events, setEvents] = useState(null)
+
+    useEffect(() => {
+        axios
+            .get("https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Events")
+            .then(response => {
+                setEvents(response.data.value)
+            })
+    }, [])
 
     return (
         <>
@@ -20,12 +29,9 @@ export const MapPanel = () => {
                         lat: 53.90478949220637,
                         lng: 27.54735640149058
                     }}
-                    defaultZoom={17}
+                    defaultZoom={11}
                 >
-                    <MapMarker lat={53.90478949220637} lng={27.54735640149058} />
-                    <MapMarker lat={53.886469185056136} lng={27.53915628552071} />
-                    <MapMarker lat={53.887077641997124} lng={27.535944819314054} />
-                    <MapMarker lat={53.88911935332895} lng={27.536236386276723} />
+                    {events.map(e => <MapEventMarker event={e} lat={e.coords_lat} lng={e.coords_lng} />)}  
                 </GoogleMapReact>}
             </Group>
         </>
