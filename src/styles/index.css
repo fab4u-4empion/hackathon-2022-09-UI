@@ -267,3 +267,11 @@ body[scheme=bright_light], body[scheme=space_gray]  {
 .vkuiCalendarTime__button {
     display: none;
 }
+
+.vkuiCalendarTime {
+    justify-content: center;
+}
+
+.CustomSelectOption__selectedIcon {
+    color: var(--orange, var(--orange)) !important;
+}

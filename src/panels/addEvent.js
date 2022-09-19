@@ -1,8 +1,9 @@
-import { Button, Calendar, DatePicker, FormItem, FormLayout, Input, PanelHeader, PanelHeaderBack, Textarea } from "@vkontakte/vkui"
+import { Avatar, Button, Calendar, DatePicker, FormItem, FormLayout, Input, PanelHeader, PanelHeaderBack, Snackbar, Textarea } from "@vkontakte/vkui"
 import { useState } from "react"
 import GoogleMapReact from 'google-map-react';
-import { MapEventMarker } from "../components/mapEventMarker";
-import { Icon28Place } from "@vkontakte/icons";
+import { Icon16Cancel, Icon28Place } from "@vkontakte/icons";
+import { useLocalStorage } from '../hooks/useLocalStorage';
+import axios from "axios";
 
 export const AddEvent = ({onClose}) => {
     const [name, setName] = useState("")
@@ -10,6 +11,42 @@ export const AddEvent = ({onClose}) => {
     const [address, setAddress] = useState("")
     const [position, setPosition] = useState(null)
     const [date, setDate] = useState(new Date);
+    const [user] = useLocalStorage(null, "user")
+    const [snackbar, setSnackbar] = useState(null)
+
+    const createEvent = () => {
+        const body = {
+            organizer_ID: user,
+            name: name,
+            descr: description,
+            coords_lat: position.lat,
+            coords_lng: position.lng,
+            address: address,
+            timeStamp: date.toISOString()
+        }
+        axios
+            .post("https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Events", body)
+            .then(response => {
+                onClose()
+            })
+            .catch((e) => {
+                setSnackbar(
+                    <Snackbar
+                        onClose={() => setSnackbar(null)}
+                        before={
+                            <Avatar
+                                size={24}
+                                style={{ background: "var(--orange)" }}
+                            >
+                                <Icon16Cancel fill="#fff" width={14} height={14} />
+                            </Avatar>
+                        }
+                    >
+                        Не удалось создать событие
+                    </Snackbar>
+                )
+            })
+    }
 
     return (
         <>
@@ -42,6 +79,7 @@ export const AddEvent = ({onClose}) => {
                         disablePast={true}
                         value={date}
                         onChange={setDate}
+                        style={{margin: "auto"}}
                     />
                 </FormItem>
                 <FormItem top="Адрес">
@@ -76,9 +114,11 @@ export const AddEvent = ({onClose}) => {
                         disabled={!name || !description || !address || !position}
                         size="m"
                         stretched
+                        onClick={createEvent}
                     >Добавить</Button>
                 </FormItem>
             </FormLayout>  
+            {snackbar}
         </>
     )
 }
