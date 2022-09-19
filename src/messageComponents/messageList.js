@@ -67,13 +67,13 @@ export const MessageList = ({ isPublic = true}) => {
                         <React.Fragment key={index}>
                             {arr.length - index == newMessageCount && <TextSeparator text="Новые сообщения" />}
                             <Message
-                                text={m.body}
-                                caption={m.id || m.senderId.substring(0, 3)}
-                                hasAvatar={m.senderId != user && isPublic}
-                                self={m.senderId == user}
-                                title={isPublic && m.email}
+                                text={m.text}
+                                caption={new Date(m.timestamp).toLocaleString("ru-RU", {hour: "numeric", minute: "numeric"})}
+                                hasAvatar={m.sender.uuid != user && isPublic}
+                                self={m.sender.uuid == user}
+                                title={isPublic && m.sender.nickname}
                                 avatar={m.avatar}
-                                id={m.id}
+                                id={m.uuid}
                             />
                             {/* {arr[index + 1] ? m.id - arr[index + 1].id == 59 && <TextSeparator text={`${m.id - 59}-${m.id - 60 + 30}`} /> : <></>} */}
                         </React.Fragment>

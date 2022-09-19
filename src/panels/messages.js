@@ -2,6 +2,7 @@ import { calcInitialsAvatarColor, Counter, Group, InitialsAvatar, List, PanelHea
 import { useEffect } from "react"
 import { useChatListContextProvider } from "../context/chatListContext"
 import { useShortText } from "../hooks/useShortText"
+import { useTimeDifference } from "../hooks/useTimeDifference"
 
 export const Messages = ({onChatOpen}) => {
 
@@ -18,16 +19,16 @@ export const Messages = ({onChatOpen}) => {
                                 <SimpleCell
                                     before={
                                         <InitialsAvatar gradientColor={calcInitialsAvatarColor(e.id)}>
-                                            {e.lastMessage.text.substring(0, 2)}
+                                            {e.uuid.substring(0, 2)}
                                         </InitialsAvatar>}
                                     key={e.uuid}
                                     onClick={() => onChatOpen(e)}
                                     subtitle={
-                                        <>{useShortText("Алексей: стикер cnbrth cnbrth cnbrth cnbrt", 25)} &#183; 2h</>
+                                        <>{useShortText(`${e.lastMessage.sender.nickname}: ${e.lastMessage.text}`, 25)} &#183; {useTimeDifference(e.lastMessage.timestamp)}</>
                                     }
                                     indicator={<Counter mode="primary">10</Counter>}
                                 >
-                                    {e.lastMessage.text.substring(0, 10)}
+                                    {e.uuid}
                                 </SimpleCell>
                             )
                         })
