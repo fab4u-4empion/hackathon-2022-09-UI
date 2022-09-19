@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const axios = require('axios');
 
 
-export const Events = ({onOpenModal, onOpenEvent}) => {
+export const Events = ({onOpenModal, onOpenEvent, onAddEvent}) => {
 
     const [events, setEvents] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
@@ -17,7 +17,7 @@ export const Events = ({onOpenModal, onOpenEvent}) => {
     useEffect(() => {
         if (fetching) {
             axios
-                .get(`https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Events?$count=true&$top=${limit}&$skip=${(currentPage - 1) * limit}&$expand=organizer($select=username)`)
+                .get(`https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Events?$count=true&$orderby=timeStamp&$top=${limit}&$skip=${(currentPage - 1) * limit}&$expand=organizer($select=username)`)
                 .then(response => {
                     setEvents([...events, ...response.data.value])
                     setTotalCount(response.data["@odata.count"])
@@ -57,7 +57,7 @@ export const Events = ({onOpenModal, onOpenEvent}) => {
                 after={
                     <>
                         <PanelHeaderButton onClick={() => onOpenModal("filter")}><Icon24Filter /></PanelHeaderButton>
-                        <PanelHeaderButton ><Icon24Add /></PanelHeaderButton>
+                        <PanelHeaderButton onClick={onAddEvent}><Icon24Add /></PanelHeaderButton>
                     </>
                 }
             >События</PanelHeader>

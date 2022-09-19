@@ -11,6 +11,9 @@ body[scheme=bright_light], body[scheme=space_gray]  {
     --button_tertiary_foreground: var(--orange) !important;
     --button_outline_foreground: var(--orange) !important;
     --button_outline_border: var(--orange) !important;
+    --vkui--color_icon_accent: var(--orange) !important;
+    --vkui--color_stroke_accent: var(--orange) !important;
+    --vkui--color_background_accent: var(--orange) !important;
 }
 
 .shadowPanelHeader > .vkuiPanelHeader__fixed {
@@ -259,4 +262,16 @@ body[scheme=bright_light], body[scheme=space_gray]  {
 .eventInfoButtons {
     display: flex;
     justify-content: center;
+}
+
+.vkuiCalendarTime__button {
+    display: none;
+}
+
+.vkuiCalendarTime {
+    justify-content: center;
+}
+
+.CustomSelectOption__selectedIcon {
+    color: var(--orange, var(--orange)) !important;
 }
