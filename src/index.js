@@ -25,6 +25,6 @@ const Index = () => {
 
 ReactDOM.render(<Index/>, document.getElementById("root"));
 
-if (process.env.NODE_ENV === "development") {
-  import("./eruda").then(({ default: eruda }) => {}); //runtime download
-}
+// if (process.env.NODE_ENV === "development") {
+//   import("./eruda").then(({ default: eruda }) => {}); //runtime download
+// }
