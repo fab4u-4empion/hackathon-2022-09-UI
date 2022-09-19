@@ -17,7 +17,7 @@ export const Events = ({onOpenModal, onOpenEvent}) => {
     useEffect(() => {
         if (fetching) {
             axios
-                .get(`https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Events?$count=true&$top=${limit}&$skip=${(currentPage - 1) * limit}`)
+                .get(`https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Events?$count=true&$top=${limit}&$skip=${(currentPage - 1) * limit}&$expand=organizer($select=username)`)
                 .then(response => {
                     setEvents([...events, ...response.data.value])
                     setTotalCount(response.data["@odata.count"])
@@ -76,7 +76,7 @@ export const Events = ({onOpenModal, onOpenEvent}) => {
                                                 {e.descr}
                                             </Text>
                                             <div className="eventBottom">
-                                                <InfoRow className="eventBottomItem" header="Организатор">{e.createdBy}</InfoRow>
+                                                <InfoRow className="eventBottomItem" header="Организатор">{e.organizer.username}</InfoRow>
                                                 <InfoRow className="eventBottomItem" header="Дата проведения">{
                                                     new Date(e.timeStamp).toLocaleString("ru-RU", {
                                                         day: "numeric",

@@ -9,7 +9,7 @@ export const MapEventMarker = ({ event, onOpenEvent }) => {
         e.stopPropagation()
         e.target.closest(".mapMarkerInner").classList.add("clicked")
         setTimeout(() => {
-            onOpenEvent(event.ID)
+            onOpenEvent && onOpenEvent(event.ID)
             e.target.closest(".mapMarkerInner").classList.remove("clicked")
         }, 100)
     }
