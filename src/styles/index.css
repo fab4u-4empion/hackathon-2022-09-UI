@@ -159,6 +159,10 @@ body[scheme=bright_light], body[scheme=space_gray]  {
     height: calc(100vh - 56px * 2 - 8px);
 }
 
+.eventInfoMap > .vkuiGroup__inner {
+    height: 300px;
+}
+
 .mapMarkerWrapper {
     width: min-content;
     height: min-content;
@@ -250,4 +254,9 @@ body[scheme=bright_light], body[scheme=space_gray]  {
 
 .rangeSlider > .vkuiFormItem__bottom {
     text-align: center;
+}
+
+.eventInfoButtons {
+    display: flex;
+    justify-content: center;
 }
