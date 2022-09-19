@@ -42,7 +42,7 @@ const App = () => {
 	const [scheme, setScheme] = useState('light')
 	const [activeStory, setActiveStory] = useState("events")
 	const [messagesActivePanel, setMessagesActivePanel] = useState("messages")
-	const [eventsActivePanel, setEventsActivePanel] = useState("addEvent")
+	const [eventsActivePanel, setEventsActivePanel] = useState("events")
 	const [mapActivePanel, setMapActivePanel] = useState("map")
 	const [event, setEvent] = useState(null)
 	const [chat, setChat] = useState(null)
