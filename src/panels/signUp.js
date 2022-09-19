@@ -1,4 +1,4 @@
-import { Group, PanelHeader, View, Panel, Button, FormLayout, FormItem, Input, FormLayoutGroup, DatePicker, Select, Textarea, Checkbox, Link, ConfigProvider, AdaptivityProvider, AppRoot, SplitLayout, WebviewType, ScreenSpinner, } from "@vkontakte/vkui"
+import { Group, PanelHeader, View, Panel, Button, FormLayout, FormItem, Input, FormLayoutGroup, DatePicker, Select, Textarea, Checkbox, Link, ConfigProvider, AdaptivityProvider, AppRoot, SplitLayout, WebviewType, ScreenSpinner, PanelHeaderBack, } from "@vkontakte/vkui"
 import axios from "axios";
 import React from "react";
 
@@ -65,7 +65,13 @@ export class SignUp extends React.Component {
                         >
                             <View activePanel="new-user">
                                 <Panel id="new-user">
-                                    <PanelHeader className="shadowPanelHeader" separator={false}>Регистрация</PanelHeader>
+                                    <PanelHeader 
+                                        className="shadowPanelHeader" 
+                                        separator={false}
+                                        before={
+                                            <PanelHeaderBack onClick={this.props.onClose}/>
+                                        }
+                                    >Регистрация</PanelHeader>
                                     <Group>
                                         <FormLayout>
                                             <FormItem
