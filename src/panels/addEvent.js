@@ -1,4 +1,4 @@
-import { Button, FormItem, FormLayout, Input, PanelHeader, PanelHeaderBack, Textarea } from "@vkontakte/vkui"
+import { Button, Calendar, DatePicker, FormItem, FormLayout, Input, PanelHeader, PanelHeaderBack, Textarea } from "@vkontakte/vkui"
 import { useState } from "react"
 import GoogleMapReact from 'google-map-react';
 import { MapEventMarker } from "../components/mapEventMarker";
@@ -9,6 +9,7 @@ export const AddEvent = ({onClose}) => {
     const [description, setDescription] = useState("")
     const [address, setAddress] = useState("")
     const [position, setPosition] = useState(null)
+    const [date, setDate] = useState(new Date);
 
     return (
         <>
@@ -34,6 +35,15 @@ export const AddEvent = ({onClose}) => {
                         onChange={e => setDescription(e.target.value)}
                     />
                 </FormItem>
+                <FormItem top="Дата и время">
+                    <Calendar
+                        size="m"
+                        enableTime={true}
+                        disablePast={true}
+                        value={date}
+                        onChange={setDate}
+                    />
+                </FormItem>
                 <FormItem top="Адрес">
                     <Input
                         placeholder="Адрес события"
@@ -48,10 +58,17 @@ export const AddEvent = ({onClose}) => {
                             lat: 53.90478949220637,
                             lng: 27.54735640149058
                         }}
+                        center={position}
                         defaultZoom={10}
                         onClick={({lat, lng}) => setPosition({lat, lng})}
                     >
-                        {position && <Icon28Place lat={position.lat} lng={position.lng} color="var{--orange}"/>}
+                        {position && <Icon28Place 
+                            lat={position.lat} 
+                            lng={position.lng} 
+                            style={{ color: "var(--orange)", transform: "translate(-50%, -100%)"}}
+                            width={40}
+                            height={40}
+                        />}
                     </GoogleMapReact>
                 </FormItem>
                 <FormItem>
