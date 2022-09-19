@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { Icon24Add } from '@vkontakte/icons';
 
-export const MapEventMarker = ({event}) => {
+export const MapEventMarker = ({ event, onOpenEvent }) => {
 
     const [timer, setTimer] = useState(null)
 
     const onClickHandler = (e) => {
         e.stopPropagation()
-        console.log(e.target);
         e.target.closest(".mapMarkerInner").classList.add("clicked")
         setTimeout(() => {
+            onOpenEvent(event.ID)
             e.target.closest(".mapMarkerInner").classList.remove("clicked")
         }, 100)
     }

@@ -4,7 +4,7 @@ import GoogleMapReact from 'google-map-react';
 import { useEffect, useState } from "react";
 import { MapEventMarker } from "../components/mapEventMarker";
 
-export const MapPanel = () => {
+export const MapPanel = ({onOpenEvent}) => {
 
     const [events, setEvents] = useState(null)
 
@@ -31,7 +31,7 @@ export const MapPanel = () => {
                     }}
                     defaultZoom={11}
                 >
-                    {events.map(e => <MapEventMarker event={e} lat={e.coords_lat} lng={e.coords_lng} />)}  
+                    {events.map(e => <MapEventMarker onOpenEvent={onOpenEvent} event={e} lat={e.coords_lat} lng={e.coords_lng} />)}  
                 </GoogleMapReact>}
             </Group>
         </>

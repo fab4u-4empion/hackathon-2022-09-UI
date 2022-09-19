@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const axios = require('axios');
 
 
-export const Events = ({onOpenModal}) => {
+export const Events = ({onOpenModal, onOpenEvent}) => {
 
     const [events, setEvents] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
@@ -55,7 +55,10 @@ export const Events = ({onOpenModal}) => {
                 className="shadowPanelHeader" 
                 separator={false}
                 after={
-                    <PanelHeaderButton onClick={() => onOpenModal("filter")}><Icon24Filter/></PanelHeaderButton>
+                    <>
+                        <PanelHeaderButton onClick={() => onOpenModal("filter")}><Icon24Filter /></PanelHeaderButton>
+                        <PanelHeaderButton ><Icon24Add /></PanelHeaderButton>
+                    </>
                 }
             >События</PanelHeader>
             <Group>
@@ -84,7 +87,7 @@ export const Events = ({onOpenModal}) => {
                                                     })
                                                 }</InfoRow>
                                             </div>
-                                            <IconButton className="eventInfoButton"><Icon24InfoCircleOutline/></IconButton>
+                                            <IconButton onClick={() => onOpenEvent(e.ID)} className="eventInfoButton"><Icon24InfoCircleOutline/></IconButton>
                                         </div> 
                                     </Card>
                                 </CardGrid>

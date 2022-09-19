@@ -13,6 +13,7 @@ import { useLocalStorage } from './hooks/useLocalStorage';
 import { MapPanel } from './panels/map';
 import { ChipsSelect } from "@vkontakte/vkui/dist/unstable";
 import "@vkontakte/vkui/dist/unstable.css";
+import { EventInfo } from './panels/eventInfo';
 
 const games = [
 	{ value: 1, label: "UNO" },
@@ -40,6 +41,9 @@ const App = () => {
 	const [scheme, setScheme] = useState('light')
 	const [activeStory, setActiveStory] = useState("events")
 	const [messagesActivePanel, setMessagesActivePanel] = useState("messages")
+	const [eventsActivePanel, setEventsActivePanel] = useState("events")
+	const [mapActivePanel, setMapActivePanel] = useState("map")
+	const [event, setEvent] = useState(null)
 	const [chat, setChat] = useState(null)
 	const [hasTabbar, setHasTabbar] = useState(true)
 	const [currentUser] = useLocalStorage(null, "user")
@@ -53,7 +57,12 @@ const App = () => {
 	const { viewWidth } = useAdaptivity();
 	const isMobile = viewWidth <= ViewWidth.MOBILE;
 
-	const onStoryChange = (e) => setActiveStory(e.currentTarget.dataset.story)
+	const onStoryChange = (e) => {
+		if (e.currentTarget.dataset.story == "map") {
+			setMapActivePanel("map")
+		}
+		setActiveStory(e.currentTarget.dataset.story)
+	}
 
 	const openChatHandler = (chat) => {
 		setChat(chat)
@@ -84,14 +93,21 @@ const App = () => {
 		setActiveStory("messages")
 	}
 
-	const openEventsHandler = (events) => {
-		setChat(events)
-		setMessagesActivePanel("events")
-		setHasTabbar(false)
+	const openEventInfoHandler = (eventID) => {
+		setEvent(eventID)
+		if (activeStory == "map") {
+			setMapActivePanel("eventInfo")
+		} else {
+			setEventsActivePanel("eventInfo")
+		}
 	}
-	const closeEventsHanler = () => {
-		setMessagesActivePanel("messages")
-		setHasTabbar(true)
+
+	const closeEventInfo = () => {
+		if (activeStory == "map") {
+			setMapActivePanel("map")
+		} else {
+			setEventsActivePanel("events")
+		}
 	}
 
 	const modalBack = () => {
@@ -259,18 +275,23 @@ const App = () => {
 									</Tabbar>
 								}
 							>
-								<View id="events" activePanel="events">
+								<View id="events" activePanel={eventsActivePanel}>
 									<Panel id="events">
 										<Events
-											onEventsOpen={openEventsHandler}
-											onClose={closeEventsHanler}
 											onOpenModal={setActiveModal}
+											onOpenEvent={openEventInfoHandler}
 										/>
 									</Panel>
+									<Panel id="eventInfo">
+										<EventInfo onClose={closeEventInfo} event={event}/>
+									</Panel>
 								</View>
-								<View id="map" activePanel='map'>
+								<View id="map" activePanel={mapActivePanel}>
 									<Panel id='map'>
-										<MapPanel/>
+										<MapPanel onOpenEvent={openEventInfoHandler}/>
+									</Panel>
+									<Panel id="eventInfo">
+										<EventInfo onClose={closeEventInfo} event={event} />
 									</Panel>
 								</View>
 								<View id="messages" activePanel={messagesActivePanel}>
