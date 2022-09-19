@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 const axios = require('axios');
 
 const Context = createContext()
@@ -15,12 +16,14 @@ export const ChatListContextProvider = ({children}) => {
     const [limit] = useState(15)
     const [fetching, setFetching] = useState(true)
     const [endOfPage, setEndOfPage] = useState(false)
+    const [user] = useLocalStorage(null, "user")
 
     useEffect(() => {
         if (fetching) {
             axios
-                .get(`https://jsonplaceholder.typicode.com/posts?_limit=${limit}&_page=${currentPage}`)
+                .get(`http://192.168.195.98:8087/api/v1/chats/sender/${user}?size=${limit}&page=${currentPage - 1}`)
                 .then(response => {
+                    console.log(response.data);
                     setChats([...chats, ...response.data.filter(e => chats.findIndex(c => c.id == e.id) < 0)])
                     setCurrentPage(prev => prev + 1)
                     setTotalCount(response.headers["x-total-count"])

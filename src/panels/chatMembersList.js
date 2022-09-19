@@ -1,6 +1,7 @@
 import { Avatar, calcInitialsAvatarColor, Cell, Group, Header, InitialsAvatar, List, PanelHeader, PanelHeaderBack, Separator, SimpleCell, Title } from "@vkontakte/vkui";
 
 export const ChatMembersList = ({ onClose, chat, onOpenProfile }) => {
+    console.log(chat);
     return ( 
         <>
             <PanelHeader 
@@ -16,9 +17,9 @@ export const ChatMembersList = ({ onClose, chat, onOpenProfile }) => {
             </PanelHeader>
             <Group className="d-f-center">
                 <InitialsAvatar size={100} gradientColor={calcInitialsAvatarColor(chat.id)}>
-                    {chat.title.substring(0, 2)}
+                    {chat.lastMessage.text.substring(0, 2)}
                 </InitialsAvatar>
-                <Title>{chat.title.substring(0, 10)}</Title>
+                <Title>{chat.lastMessage.text.substring(0, 10)}</Title>
             </Group>
             <Group>
                 <List>

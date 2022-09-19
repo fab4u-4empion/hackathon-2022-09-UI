@@ -2,6 +2,7 @@ import { Separator, Spinner } from "@vkontakte/vkui";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { TextSeparator } from "../components/textSeparator";
 import { useChatContextProvider } from "../context/chatContext";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Message } from "./message"
 
 export const MessageList = ({ isPublic = true}) => {
@@ -9,6 +10,7 @@ export const MessageList = ({ isPublic = true}) => {
     const { messages, fetching, needScroll, newMessageCount, endOfPage } = useChatContextProvider()
     const [windowHeight, setWindowHeight] = useState(window.innerHeight)
     const [didResize, setDidResize] = useState(false)
+    const [user] = useLocalStorage(null, "user")
 
     const bottomRef = useRef(null)
 
@@ -66,9 +68,9 @@ export const MessageList = ({ isPublic = true}) => {
                             {arr.length - index == newMessageCount && <TextSeparator text="Новые сообщения" />}
                             <Message
                                 text={m.body}
-                                caption={m.id}
-                                hasAvatar={m.id % 2 == 1 && isPublic}
-                                self={m.id % 2 == 0}
+                                caption={m.id || m.senderId.substring(0, 3)}
+                                hasAvatar={m.senderId != user && isPublic}
+                                self={m.senderId == user}
                                 title={isPublic && m.email}
                                 avatar={m.avatar}
                                 id={m.id}

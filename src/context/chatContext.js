@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const Context = createContext()
 
@@ -20,6 +21,7 @@ export const ChatContextProvider = ({children, chat}) => {
     const [needScroll, setNeedScroll] = useState(true)
     const [newMessageCount, setNewMessageCount] = useState(2)
     const [openSocket, setOpenSocket] = useState(false)
+    const [user] = useLocalStorage(null, "user")
 
     useEffect(async () => {
         const membersResponse = await axios.get("https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Users")
@@ -30,10 +32,10 @@ export const ChatContextProvider = ({children, chat}) => {
     }, []);
 
     useEffect(() => {
-        socket = new WebSocket("ws://192.168.160.194:8087/hello")
-        socket.addEventListener("opne", openWebSocketHandler)
+        socket = new WebSocket("ws://192.168.195.98:8087/chat")
+        socket.addEventListener("open", openWebSocketHandler)
         return () => {
-            socket.removeEventListener("opne", openWebSocketHandler)
+            socket.removeEventListener("open", openWebSocketHandler)
             socket.close()
         }
     }, [])
@@ -89,7 +91,7 @@ export const ChatContextProvider = ({children, chat}) => {
     const sendMessage = (text) => {
         setNeedScroll(true)
         const message = {
-            "senderId": 1,
+            "senderId": user,
             "chatId": 2,
             "email": "test@test.test",
             "body": text
@@ -101,6 +103,11 @@ export const ChatContextProvider = ({children, chat}) => {
 
     const openWebSocketHandler = (e) => {
         setOpenSocket(true)
+        socket.send(JSON.stringify({
+            isInit: true,
+            chatId: chat.uuid,
+            senderId: user
+        }))
         console.log(e);
     }
 
