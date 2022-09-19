@@ -14,6 +14,7 @@ import { MapPanel } from './panels/map';
 import { ChipsSelect } from "@vkontakte/vkui/dist/unstable";
 import "@vkontakte/vkui/dist/unstable.css";
 import { EventInfo } from './panels/eventInfo';
+import { AddEvent } from './panels/addEvent';
 
 const games = [
 	{ value: 1, label: "UNO" },
@@ -41,7 +42,7 @@ const App = () => {
 	const [scheme, setScheme] = useState('light')
 	const [activeStory, setActiveStory] = useState("events")
 	const [messagesActivePanel, setMessagesActivePanel] = useState("messages")
-	const [eventsActivePanel, setEventsActivePanel] = useState("events")
+	const [eventsActivePanel, setEventsActivePanel] = useState("addEvent")
 	const [mapActivePanel, setMapActivePanel] = useState("map")
 	const [event, setEvent] = useState(null)
 	const [chat, setChat] = useState(null)
@@ -60,6 +61,9 @@ const App = () => {
 	const onStoryChange = (e) => {
 		if (e.currentTarget.dataset.story == "map") {
 			setMapActivePanel("map")
+		}
+		if (e.currentTarget.dataset.story == "events") {
+			setEventsActivePanel("events")
 		}
 		setActiveStory(e.currentTarget.dataset.story)
 	}
@@ -108,6 +112,14 @@ const App = () => {
 		} else {
 			setEventsActivePanel("events")
 		}
+	}
+
+	const openAddEvent = () => {
+		setEventsActivePanel("addEvent")
+	}
+
+	const closeAddEvent = () => {
+		setEventsActivePanel("events")
 	}
 
 	const modalBack = () => {
@@ -280,10 +292,14 @@ const App = () => {
 										<Events
 											onOpenModal={setActiveModal}
 											onOpenEvent={openEventInfoHandler}
+											onAddEvent={openAddEvent}
 										/>
 									</Panel>
 									<Panel id="eventInfo">
 										<EventInfo onClose={closeEventInfo} event={event}/>
+									</Panel>
+									<Panel id="addEvent">
+										<AddEvent onClose={closeAddEvent}/>
 									</Panel>
 								</View>
 								<View id="map" activePanel={mapActivePanel}>
