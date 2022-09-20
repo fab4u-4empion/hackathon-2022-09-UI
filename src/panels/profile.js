@@ -95,12 +95,13 @@ export const Profile = ({user, hasBack, onClose}) => {
                         </Group>
                     </Group>
                     <Group header={<Header mode="secondary">Информация</Header>}>
-                        <MiniInfoCell before={<Icon24PhoneOutline />} textLevel="primary">
+                    {console.log(userInfo.phoneNumber)}
+                        {userInfo.phoneNumber != "" && <MiniInfoCell before={<Icon24PhoneOutline />} textLevel="primary">
                             {userInfo.phoneNumber}
-                        </MiniInfoCell>
-                        <MiniInfoCell before={<Icon24MailOutline />} textLevel="primary">
+                        </MiniInfoCell>}
+                        {userInfo.email != "" && <MiniInfoCell before={<Icon24MailOutline />} textLevel="primary">
                             {userInfo.email}
-                        </MiniInfoCell>
+                        </MiniInfoCell>}
                         <MiniInfoCell before={<Icon24CalendarOutline />} textLevel="primary">
                             {useTextDate(userInfo.dateOfBirth)}
                         </MiniInfoCell>
