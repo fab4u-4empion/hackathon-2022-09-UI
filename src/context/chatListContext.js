@@ -23,7 +23,6 @@ export const ChatListContextProvider = ({children}) => {
             axios
                 .get(`http://192.168.195.98:8087/api/v1/chats/sender/${user}?size=${limit}&page=${currentPage - 1}`)
                 .then(response => {
-                    console.log(response.data);
                     setChats([...chats, ...response.data.filter(e => chats.findIndex(c => c.id == e.id) < 0)])
                     setCurrentPage(prev => prev + 1)
                     setTotalCount(response.headers["x-total-count"])
@@ -54,14 +53,14 @@ export const ChatListContextProvider = ({children}) => {
         }
     }
 
-    const newMessageHandler = (message) => {
-        const index = chats.findIndex(e => e.id == message.id)
+    const newMessageHandler = (chat) => {
+        const index = chats.findIndex(e => e.uuid == chat.uuid)
         if (index > -1) {
             const temp = [...chats]
             temp.splice(index, 1)
-            setChats([message, ...temp])
+            setChats([chat, ...temp])
         } else {
-            setChats([message, ...chats])
+            setChats([chat, ...chats])
         };
     }
 

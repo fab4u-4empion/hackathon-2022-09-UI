@@ -19,7 +19,7 @@ export const ChatContextProvider = ({children, chat}) => {
     const [limit] = useState(15)
     const [endOfPage, setEndOfPage] = useState(false)
     const [needScroll, setNeedScroll] = useState(true)
-    const [newMessageCount, setNewMessageCount] = useState(2)
+    const [newMessageCount, setNewMessageCount] = useState(0)
     const [openSocket, setOpenSocket] = useState(false)
     const [user] = useLocalStorage(null, "user")
     const [onMessage, setOnMessage] = useState(false)
@@ -69,14 +69,15 @@ export const ChatContextProvider = ({children, chat}) => {
         axios
             .get(`http://192.168.195.98:8087/api/v1/messages/chat/${chat.uuid}?size=${limit}&page=${currentPage}`)
             .then(response => {
-                setMessages([...response.data, ...messages])
+                setNewMessageCount(chat.unreadMessages)
+                setMessages([...response.data.reverse(), ...messages])
                 setCurrentPage(prev => prev + 1)
                 setTotalCount(response.headers["x-total-count"])
             })
             .finally(() => {
                 setEndOfPage(false)
                 setFetching(false)
-                currentPage == 1 && window.scrollTo(window.scrollX, document.body.scrollHeight) 
+                currentPage == 0 && window.scrollTo(window.scrollX, document.body.scrollHeight) 
             })
     }
 

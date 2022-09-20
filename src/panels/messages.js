@@ -26,9 +26,9 @@ export const Messages = ({onChatOpen}) => {
                                     subtitle={
                                         <>{useShortText(`${e.lastMessage.sender.nickname}: ${e.lastMessage.text}`, 25)} &#183; {useTimeDifference(e.lastMessage.timestamp)}</>
                                     }
-                                    indicator={<Counter mode="primary">10</Counter>}
+                                    indicator={e.unreadMessages != 0 && <Counter mode="primary">{e.unreadMessages}</Counter>}
                                 >
-                                    {e.uuid}
+                                    {useShortText(e.uuid, 23)}
                                 </SimpleCell>
                             )
                         })
