@@ -48,12 +48,12 @@ export const Chat = ({
                 <PanelHeaderContent
                     before={
                         <InitialsAvatar size={36} gradientColor={calcInitialsAvatarColor(chat.id)}>
-                            {chat.lastMessage.text.substring(0, 2)}
+                            {chat.chatName.substring(0, 2)}
                         </InitialsAvatar>
                     }
                     status={`${members.length} участников`}
                 >
-                    {chat.lastMessage.text.substring(0, 10)}
+                    {chat.chatName}
                 </PanelHeaderContent>
             </PanelHeader>
             <MessageList/>

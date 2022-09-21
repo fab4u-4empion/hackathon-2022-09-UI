@@ -27,8 +27,11 @@ export const ChatContextProvider = ({children, chat}) => {
 
 
     useEffect(async () => {
-        const membersResponse = await axios.get("https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Users")
-        setMembers([...membersResponse.data.value]) 
+        const membersIDs = await axios.get(`http://192.168.195.98:8087/api/v1/chats/${chat.uuid}/members`)
+        const members = await axios.post("https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/getUsersByIds", {
+            ids: membersIDs.data.map(e => e.uuid)
+        })
+        setMembers(members.data.value) 
         setTimeout(() => {
             getMessages()
         }, 500)

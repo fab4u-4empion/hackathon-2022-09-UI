@@ -19,7 +19,7 @@ export const Messages = ({onChatOpen}) => {
                                 <SimpleCell
                                     before={
                                         <InitialsAvatar gradientColor={calcInitialsAvatarColor(e.id)}>
-                                            {e.uuid.substring(0, 2)}
+                                            {e.chatName.substring(0, 2)}
                                         </InitialsAvatar>}
                                     key={e.uuid}
                                     onClick={() => onChatOpen(e)}
@@ -28,7 +28,7 @@ export const Messages = ({onChatOpen}) => {
                                     }
                                     indicator={e.unreadMessages != 0 && <Counter mode="primary">{e.unreadMessages}</Counter>}
                                 >
-                                    {useShortText(e.uuid, 23)}
+                                    {e.unreadMessages != 0 ? useShortText(e.chatName, 23) : e.chatName}
                                 </SimpleCell>
                             )
                         })

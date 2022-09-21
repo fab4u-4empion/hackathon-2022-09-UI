@@ -17,9 +17,9 @@ export const ChatMembersList = ({ onClose, chat, onOpenProfile }) => {
             </PanelHeader>
             <Group className="d-f-center">
                 <InitialsAvatar size={100} gradientColor={calcInitialsAvatarColor(chat.id)}>
-                    {chat.lastMessage.text.substring(0, 2)}
+                    {chat.chatName.substring(0, 2)}
                 </InitialsAvatar>
-                <Title>{chat.lastMessage.text.substring(0, 10)}</Title>
+                <Title>{chat.chatName}</Title>
             </Group>
             <Group>
                 <List>
