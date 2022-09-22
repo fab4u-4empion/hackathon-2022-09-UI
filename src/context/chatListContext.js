@@ -27,7 +27,7 @@ export const ChatListContextProvider = ({children}) => {
         if (fetching && openSocket) {
             console.log(fetching, openSocket);
             axios
-                .get(`http://192.168.28.194:8087/api/v1/chats/sender/${user}?size=${limit}&page=${currentPage}`)
+                .get(`http://192.168.195.98:8087/api/v1/chats/sender/${user}?size=${limit}&page=${currentPage}`)
                 .then(response => {
                     setChats([...chats, ...response.data.filter(e => chats.findIndex(c => c.uuid == e.uuid) < 0)])
                     setCurrentPage(prev => prev + 1)
@@ -48,7 +48,7 @@ export const ChatListContextProvider = ({children}) => {
     }, [])
 
     useEffect(() => {
-        socket = new WebSocket("ws://192.168.28.194:8087/chats")
+        socket = new WebSocket("ws://192.168.195.98:8087/chats")
         socket.addEventListener("open", openWebSocketHandler)
         socket.onmessage = (message) => {
             setChat(JSON.parse(message.data))
