@@ -3,10 +3,13 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import GoogleMapReact from 'google-map-react';
 import { MapEventMarker } from "../components/mapEventMarker";
-import { Icon16Crown, Icon20Add, Icon20CalendarOutline, Icon20CrownCircleFillVkDating, Icon20MessageOutline, Icon20PlaceOutline, Icon20Users3Outline } from "@vkontakte/icons";
+import { Icon16Crown, Icon20Add, Icon20CalendarOutline, Icon20CrownCircleFillVkDating, Icon20DoorArrowRightOutline, Icon20DoorEnterArrowRightOutline, Icon20MessageOutline, Icon20PlaceOutline, Icon20Users3Outline } from "@vkontakte/icons";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export const EventInfo = ({event, onClose}) => {
     const [eventInfo, setEventInfo] = useState(null)
+    const [user] = useLocalStorage(null, "user")
+    const [fetching, setFetching] = useState(false)
 
     useEffect(() => {
         axios
@@ -15,6 +18,31 @@ export const EventInfo = ({event, onClose}) => {
                 setEventInfo(response.data)
             })
     }, [])
+
+    const joinEvent = async () => {
+        setFetching(true)
+        await axios.post(`https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Events/${event}/members`, {
+                "user_ID": user,
+                "role": 0
+            })
+        axios
+            .get(`https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Events/${event}?$expand=members,organizer($select=username)`)
+            .then(response => {
+                setEventInfo(response.data)
+                setFetching(false)
+            })
+    }
+
+    const leaveEvent = async () => {
+        setFetching(true)
+        await axios.delete(`https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Events/${event}/members/${user}`)
+        axios
+            .get(`https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/Events/${event}?$expand=members,organizer($select=username)`)
+            .then(response => {
+                setEventInfo(response.data)
+                setFetching(false)
+            })
+    }
 
     return (
         <>
@@ -67,7 +95,12 @@ export const EventInfo = ({event, onClose}) => {
                     </Group>
                     <Group style={{ padding: "0px 10px" }}>
                         <ButtonGroup className="eventInfoButtons">
-                            <Button before={<Icon20Add/>} mode="outline">Присоединиться</Button>
+                            {eventInfo.members.filter(e => e.user_ID == user).length == 0 && 
+                                <Button onClick={joinEvent} before={fetching ? <Spinner size="small"/> : <Icon20Add />} mode="outline">Присоединиться</Button>
+                            }
+                            {eventInfo.members.filter(e => e.user_ID == user).length != 0 &&
+                                <Button onClick={leaveEvent} before={fetching ? <Spinner size="small" /> : <Icon20DoorEnterArrowRightOutline />} mode="outline">Покинуть</Button>
+                            }
                             <Button before={<Icon20MessageOutline/>} mode="outline">Чат</Button>
                         </ButtonGroup>
                     </Group>

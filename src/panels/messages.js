@@ -2,10 +2,11 @@ import { calcInitialsAvatarColor, Counter, Group, InitialsAvatar, List, PanelHea
 import { useEffect } from "react"
 import { useChatListContextProvider } from "../context/chatListContext"
 import { useShortText } from "../hooks/useShortText"
+import { useTimeDifference } from "../hooks/useTimeDifference"
 
 export const Messages = ({onChatOpen}) => {
 
-    const { chats, fetching } = useChatListContextProvider()
+    const { chats, fetching, openSocket } = useChatListContextProvider()
 
     return (
         <>
@@ -18,16 +19,16 @@ export const Messages = ({onChatOpen}) => {
                                 <SimpleCell
                                     before={
                                         <InitialsAvatar gradientColor={calcInitialsAvatarColor(e.id)}>
-                                            {e.title.substring(0, 2)}
+                                            {e.chatName.substring(0, 2)}
                                         </InitialsAvatar>}
-                                    key={e.id}
+                                    key={e.uuid}
                                     onClick={() => onChatOpen(e)}
-                                    subtitle={
-                                        <>{useShortText("Алексей: стикер cnbrth cnbrth cnbrth cnbrt", 25)} &#183; 2h</>
+                                    subtitle={e.lastMessage.uuid &&
+                                        <>{useShortText(`${e.lastMessage.sender.nickname}: ${e.lastMessage.text}`, 25)} &#183; {useTimeDifference(e.lastMessage.timestamp)}</>
                                     }
-                                    indicator={<Counter mode="primary">10</Counter>}
+                                    indicator={e.unreadMessages != 0 && <Counter mode="primary">{e.unreadMessages}</Counter>}
                                 >
-                                    {e.title.substring(0, 10)}
+                                    {e.unreadMessages != 0 ? useShortText(e.chatName, 23) : e.chatName}
                                 </SimpleCell>
                             )
                         })
