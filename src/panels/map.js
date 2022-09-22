@@ -31,7 +31,7 @@ export const MapPanel = ({onOpenEvent}) => {
                     }}
                     defaultZoom={11}
                 >
-                    {events.map(e => <MapEventMarker onOpenEvent={onOpenEvent} event={e} lat={e.coords_lat} lng={e.coords_lng} />)}  
+                    {events.map(e => <MapEventMarker key={e.ID} onOpenEvent={onOpenEvent} event={e} lat={e.coords_lat} lng={e.coords_lng} />)}  
                 </GoogleMapReact>}
             </Group>
         </>
