@@ -39,7 +39,7 @@ const org = [
 
 const App = () => {
 	const [scheme, setScheme] = useState('light')
-	const [activeStory, setActiveStory] = useState("messages")
+	const [activeStory, setActiveStory] = useState("events")
 	const [messagesActivePanel, setMessagesActivePanel] = useState("messages")
 	const [eventsActivePanel, setEventsActivePanel] = useState("events")
 	const [mapActivePanel, setMapActivePanel] = useState("map")
