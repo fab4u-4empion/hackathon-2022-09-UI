@@ -19,7 +19,7 @@ export const ChatMembersList = ({ onClose, chat, onOpenProfile }) => {
                 <InitialsAvatar size={100} gradientColor={calcInitialsAvatarColor(chat.id)}>
                     {chat.chatName.substring(0, 2)}
                 </InitialsAvatar>
-                <Title>{chat.chatName}</Title>
+                <Title style={{textAlign: "center"}}>{chat.chatName}</Title>
             </Group>
             <Group>
                 <List>
