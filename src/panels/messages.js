@@ -14,7 +14,7 @@ export const Messages = ({onChatOpen}) => {
             <Group>
                 <List>
                     {
-                        !fetching && openSocket && chats.map(e => {
+                        chats.map(e => {
                             return (
                                 <SimpleCell
                                     before={
@@ -23,7 +23,7 @@ export const Messages = ({onChatOpen}) => {
                                         </InitialsAvatar>}
                                     key={e.uuid}
                                     onClick={() => onChatOpen(e)}
-                                    subtitle={e.lastMessage &&
+                                    subtitle={e.lastMessage.uuid &&
                                         <>{useShortText(`${e.lastMessage.sender.nickname}: ${e.lastMessage.text}`, 25)} &#183; {useTimeDifference(e.lastMessage.timestamp)}</>
                                     }
                                     indicator={e.unreadMessages != 0 && <Counter mode="primary">{e.unreadMessages}</Counter>}
@@ -33,7 +33,7 @@ export const Messages = ({onChatOpen}) => {
                             )
                         })
                     }
-                    {fetching && !openSocket && <Spinner />}
+                    {fetching && <Spinner />}
                 </List>
             </Group>
         </>

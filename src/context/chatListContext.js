@@ -13,7 +13,7 @@ let socket
 export const ChatListContextProvider = ({children}) => {
 
     const [chats, setChats] = useState([])
-    const [currentPage, setCurrentPage] = useState(1)
+    const [currentPage, setCurrentPage] = useState(0)
     const [totalCount, setTotalCount] = useState(0)
     const [limit] = useState(3)
     const [fetching, setFetching] = useState(true)
@@ -25,10 +25,11 @@ export const ChatListContextProvider = ({children}) => {
 
     useEffect(() => {
         if (fetching && openSocket) {
+            console.log(fetching, openSocket);
             axios
-                .get(`http://192.168.195.98:8087/api/v1/chats/sender/${user}?size=${limit}&page=${currentPage - 1}`)
+                .get(`http://192.168.28.194:8087/api/v1/chats/sender/${user}?size=${limit}&page=${currentPage}`)
                 .then(response => {
-                    setChats([...chats, ...response.data.filter(e => chats.findIndex(c => c.id == e.id) < 0)])
+                    setChats([...chats, ...response.data.filter(e => chats.findIndex(c => c.uuid == e.uuid) < 0)])
                     setCurrentPage(prev => prev + 1)
                     setTotalCount(response.headers["x-total-count"])
                 })
@@ -47,7 +48,7 @@ export const ChatListContextProvider = ({children}) => {
     }, [])
 
     useEffect(() => {
-        socket = new WebSocket("ws://192.168.195.98:8087/chats")
+        socket = new WebSocket("ws://192.168.28.194:8087/chats")
         socket.addEventListener("open", openWebSocketHandler)
         socket.onmessage = (message) => {
             setChat(JSON.parse(message.data))

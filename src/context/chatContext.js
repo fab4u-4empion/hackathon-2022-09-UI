@@ -27,7 +27,7 @@ export const ChatContextProvider = ({children, chat}) => {
 
 
     useEffect(async () => {
-        const membersIDs = await axios.get(`http://192.168.195.98:8087/api/v1/chats/${chat.uuid}/members`)
+        const membersIDs = await axios.get(`http://192.168.28.194:8087/api/v1/chats/${chat.uuid}/members`)
         const members = await axios.post("https://b451dbd8trial-dev-dice.cfapps.us10.hana.ondemand.com/main/getUsersByIds", {
             ids: membersIDs.data.map(e => e.uuid)
         })
@@ -38,7 +38,7 @@ export const ChatContextProvider = ({children, chat}) => {
     }, []);
 
     useEffect(() => {
-        socket = new WebSocket("ws://192.168.195.98:8087/chat")
+        socket = new WebSocket("ws://192.168.28.194:8087/chat")
         socket.addEventListener("open", openWebSocketHandler)
         socket.onmessage = (message) => {
             setNewMessage(JSON.parse(message.data))
@@ -73,7 +73,7 @@ export const ChatContextProvider = ({children, chat}) => {
 
     const getMessages = () => {
         axios
-            .get(`http://192.168.195.98:8087/api/v1/messages/chat/${chat.uuid}?size=${limit}&page=${currentPage}`)
+            .get(`http://192.168.28.194:8087/api/v1/messages/chat/${chat.uuid}?size=${limit}&page=${currentPage}`)
             .then(response => {
                 setNewMessageCount(chat.unreadMessages)
                 setMessages([...response.data.reverse(), ...messages])

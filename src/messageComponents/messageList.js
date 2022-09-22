@@ -4,6 +4,7 @@ import { TextSeparator } from "../components/textSeparator";
 import { useChatContextProvider } from "../context/chatContext";
 import { useDateComparison } from "../hooks/useDateComparison";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { useDateSeparatorText } from "../hooks/useDateSeparatorText";
 import { Message } from "./message"
 
 export const MessageList = ({ isPublic = true}) => {
@@ -76,7 +77,7 @@ export const MessageList = ({ isPublic = true}) => {
                                 avatar={m.avatar}
                                 id={m.uuid}
                             />
-                            {arr[index + 1] ? !useDateComparison(m.timestamp, arr[index + 1].timestamp) && <TextSeparator text={`${new Date(arr[index + 1].timestamp).toLocaleString("ru-RU", {day: "numeric", month: "long"}) }`} /> : <></>}
+                            {arr[index + 1] ? !useDateComparison(m.timestamp, arr[index + 1].timestamp) && <TextSeparator text={`${ useDateSeparatorText(arr[index + 1].timestamp) }`} /> : <></>}
                         </React.Fragment>
                     )
                 }))}
