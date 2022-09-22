@@ -15,7 +15,7 @@ export const ChatListContextProvider = ({children}) => {
     const [chats, setChats] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [totalCount, setTotalCount] = useState(0)
-    const [limit] = useState(15)
+    const [limit] = useState(3)
     const [fetching, setFetching] = useState(true)
     const [endOfPage, setEndOfPage] = useState(false)
     const [user] = useLocalStorage(null, "user")

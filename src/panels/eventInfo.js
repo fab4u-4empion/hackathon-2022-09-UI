@@ -3,7 +3,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import GoogleMapReact from 'google-map-react';
 import { MapEventMarker } from "../components/mapEventMarker";
-import { Icon16Crown, Icon20Add, Icon20CalendarOutline, Icon20CrownCircleFillVkDating, Icon20DoorArrowRightOutline, Icon20MessageOutline, Icon20PlaceOutline, Icon20Users3Outline } from "@vkontakte/icons";
+import { Icon16Crown, Icon20Add, Icon20CalendarOutline, Icon20CrownCircleFillVkDating, Icon20DoorArrowRightOutline, Icon20DoorEnterArrowRightOutline, Icon20MessageOutline, Icon20PlaceOutline, Icon20Users3Outline } from "@vkontakte/icons";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export const EventInfo = ({event, onClose}) => {
@@ -99,7 +99,7 @@ export const EventInfo = ({event, onClose}) => {
                                 <Button onClick={joinEvent} before={fetching ? <Spinner size="small"/> : <Icon20Add />} mode="outline">Присоединиться</Button>
                             }
                             {eventInfo.members.filter(e => e.user_ID == user).length != 0 &&
-                                <Button onClick={leaveEvent} before={fetching ? <Spinner size="small" /> : <Icon20DoorArrowRightOutline />} mode="outline">Покинуть</Button>
+                                <Button onClick={leaveEvent} before={fetching ? <Spinner size="small" /> : <Icon20DoorEnterArrowRightOutline />} mode="outline">Покинуть</Button>
                             }
                             <Button before={<Icon20MessageOutline/>} mode="outline">Чат</Button>
                         </ButtonGroup>
