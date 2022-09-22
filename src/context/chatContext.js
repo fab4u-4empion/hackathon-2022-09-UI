@@ -52,7 +52,10 @@ export const ChatContextProvider = ({children, chat}) => {
 
     useEffect(() => {
         if(onMessage) {
-            setNewMessageCount(prev => prev + 1)
+            if(newMessage.sender.uuid != user)
+                setNewMessageCount(prev => prev + 1)
+            else 
+                setNewMessageCount(0)
             setMessages([...messages, newMessage])
             setOnMessage(false)
         }

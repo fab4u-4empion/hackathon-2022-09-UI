@@ -8,6 +8,8 @@ export const useChatListContextProvider = () => {
     return useContext(Context)
 }
 
+let socket
+
 export const ChatListContextProvider = ({children}) => {
 
     const [chats, setChats] = useState([])
@@ -17,9 +19,12 @@ export const ChatListContextProvider = ({children}) => {
     const [fetching, setFetching] = useState(true)
     const [endOfPage, setEndOfPage] = useState(false)
     const [user] = useLocalStorage(null, "user")
+    const [openSocket, setOpenSocket] = useState(false)
+    const [onMessage, setOnMessage] = useState(false)
+    const [chat, setChat] = useState(null)
 
     useEffect(() => {
-        if (fetching) {
+        if (fetching && openSocket) {
             axios
                 .get(`http://192.168.195.98:8087/api/v1/chats/sender/${user}?size=${limit}&page=${currentPage - 1}`)
                 .then(response => {
@@ -32,7 +37,7 @@ export const ChatListContextProvider = ({children}) => {
                     setFetching(false)
                 })
         }
-    }, [fetching])
+    }, [fetching, openSocket])
 
     useEffect(() => {
         window.addEventListener("scroll", scrollHandler)
@@ -40,6 +45,28 @@ export const ChatListContextProvider = ({children}) => {
             window.removeEventListener("scroll", scrollHandler)
         }
     }, [])
+
+    useEffect(() => {
+        socket = new WebSocket("ws://192.168.195.98:8087/chats")
+        socket.addEventListener("open", openWebSocketHandler)
+        socket.onmessage = (message) => {
+            setChat(JSON.parse(message.data))
+            setOnMessage(true)
+        }
+        return () => {
+            socket.removeEventListener("open", openWebSocketHandler)
+            socket.close()
+        }
+    }, [])
+
+    const openWebSocketHandler = (e) => {
+        setOpenSocket(true)
+        socket.send(JSON.stringify({
+            isInit: true,
+            userId: user
+        }))
+        console.log(e);
+    }
 
     useEffect(() => {
         if (endOfPage && chats.length < totalCount) {
@@ -53,21 +80,24 @@ export const ChatListContextProvider = ({children}) => {
         }
     }
 
-    const newMessageHandler = (chat) => {
-        const index = chats.findIndex(e => e.uuid == chat.uuid)
-        if (index > -1) {
-            const temp = [...chats]
-            temp.splice(index, 1)
-            setChats([chat, ...temp])
-        } else {
-            setChats([chat, ...chats])
-        };
-    }
+    useEffect(() => {
+        if (onMessage) {
+            const index = chats.findIndex(e => e.uuid == chat.uuid)
+            if (index > -1) {
+                const temp = [...chats]
+                temp.splice(index, 1)
+                setChats([chat, ...temp])
+            } else {
+                setChats([chat, ...chats])
+            };
+        }
+    }, [onMessage])
 
     return (
         <Context.Provider value={{
             chats,
-            fetching
+            fetching,
+            openSocket
         }}>
             {children}
         </Context.Provider>

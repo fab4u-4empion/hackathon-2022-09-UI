@@ -6,7 +6,7 @@ import { useTimeDifference } from "../hooks/useTimeDifference"
 
 export const Messages = ({onChatOpen}) => {
 
-    const { chats, fetching } = useChatListContextProvider()
+    const { chats, fetching, openSocket } = useChatListContextProvider()
 
     return (
         <>
@@ -14,7 +14,7 @@ export const Messages = ({onChatOpen}) => {
             <Group>
                 <List>
                     {
-                        chats.map(e => {
+                        openSocket && chats.map(e => {
                             return (
                                 <SimpleCell
                                     before={
@@ -33,7 +33,7 @@ export const Messages = ({onChatOpen}) => {
                             )
                         })
                     }
-                    {fetching && <Spinner />}
+                    {fetching && !openSocket && <Spinner />}
                 </List>
             </Group>
         </>
